@@ -1,11 +1,7 @@
 #include "NDConverter.h"
 
-NDConverter::NDConverter()
+NDConverter::NDConverter(NFA nfa)
 {
     //ctor
 }
 
-NDConverter::~NDConverter()
-{
-    //dtor
-}

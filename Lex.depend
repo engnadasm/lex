@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1514140574 source:f:\csed21\year 3\semester 2\compilers\lexical analyzer generator\lex\main.cpp
+	<iostream>
+
+1584614389 source:f:\csed21\year 3\semester 2\compilers\lexical analyzer generator\lex\src\dfa.cpp
+	"DFA.h"
+
+1584614347 f:\csed21\year 3\semester 2\compilers\lexical analyzer generator\lex\include\dfa.h
+	<set>
+	<string>
+

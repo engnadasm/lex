@@ -5,7 +5,3 @@ SymbolTableEntry::SymbolTableEntry()
     //ctor
 }
 
-SymbolTableEntry::~SymbolTableEntry()
-{
-    //dtor
-}

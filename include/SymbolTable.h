@@ -1,5 +1,9 @@
 #ifndef SYMBOLTABLE_H
 #define SYMBOLTABLE_H
+#include <string>
+#include "SymbolTableEntry.h"
+
+using namespace std;
 
 
 class SymbolTable

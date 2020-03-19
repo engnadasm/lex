@@ -1,6 +1,8 @@
 #ifndef DFAMINIMZER_H
 #define DFAMINIMZER_H
+#include "DFA.h"
 
+using namespace std;
 
 class DFAMinimzer
 {

@@ -1,6 +1,9 @@
 #ifndef NFA_H
 #define NFA_H
+#include <set>
+#include <string>
 
+using namespace std;
 
 class NFA
 {

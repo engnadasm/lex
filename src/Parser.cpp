@@ -1,11 +1,7 @@
 #include "Parser.h"
 
-Parser::Parser()
+Parser::Parser(string path)
 {
     //ctor
 }
 
-Parser::~Parser()
-{
-    //dtor
-}

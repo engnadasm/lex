@@ -1,11 +1,7 @@
 #include "DFA.h"
 
-DFA::DFA()
+DFA::DFA(set<char> inputs, int numStates, int initState)
 {
     //ctor
 }
 
-DFA::~DFA()
-{
-    //dtor
-}

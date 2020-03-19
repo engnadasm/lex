@@ -1,5 +1,9 @@
 #ifndef DFA_H
 #define DFA_H
+#include <set>
+#include <string>
+
+using namespace std;
 
 
 class DFA

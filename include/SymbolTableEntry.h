@@ -6,7 +6,6 @@ class SymbolTableEntry
 {
     public:
         SymbolTableEntry();
-        virtual ~SymbolTableEntry();
 
     protected:
 

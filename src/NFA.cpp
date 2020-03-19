@@ -5,7 +5,3 @@ NFA::NFA()
     //ctor
 }
 
-NFA::~NFA()
-{
-    //dtor
-}

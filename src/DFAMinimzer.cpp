@@ -1,11 +1,6 @@
 #include "DFAMinimzer.h"
 
-DFAMinimzer::DFAMinimzer()
+DFAMinimzer::DFAMinimzer(DFA dfa)
 {
     //ctor
-}
-
-DFAMinimzer::~DFAMinimzer()
-{
-    //dtor
 }

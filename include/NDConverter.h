@@ -1,6 +1,9 @@
 #ifndef NDCONVERTER_H
 #define NDCONVERTER_H
+#include "DFA.h"
+#include "NFA.h"
 
+using namespace std;
 
 class NDConverter
 {

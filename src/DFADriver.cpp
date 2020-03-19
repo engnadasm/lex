@@ -1,11 +1,6 @@
 #include "DFADriver.h"
 
-DFADriver::DFADriver()
+DFADriver::DFADriver(DFA dfa)
 {
     //ctor
-}
-
-DFADriver::~DFADriver()
-{
-    //dtor
 }
