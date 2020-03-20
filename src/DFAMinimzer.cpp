@@ -1,4 +1,4 @@
-#include "DFAMinimzer.h"
+#include "../include/DFAMinimzer.h"
 
 DFAMinimzer::DFAMinimzer(DFA dfa)
 {

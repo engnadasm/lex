@@ -1,4 +1,4 @@
-#include "DFADriver.h"
+#include "../include/DFADriver.h"
 
 DFADriver::DFADriver(DFA dfa)
 {

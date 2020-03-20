@@ -1,4 +1,4 @@
-#include "SymbolTable.h"
+#include "../include/SymbolTable.h"
 
 SymbolTable::SymbolTable()
 {
