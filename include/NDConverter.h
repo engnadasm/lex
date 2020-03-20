@@ -17,7 +17,10 @@ class NDConverter
 
     private:
         NFA* nfa;
-        DFA* dfa;
+        DFA dfa;
+        set<int> acceptStates;
+        set<char> inputSymbols ;
+        bool checkAccept(set<int> U);
 };
 
 #endif // NDCONVERTER_H

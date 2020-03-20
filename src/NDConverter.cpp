@@ -2,24 +2,31 @@
 #include <iostream>
 #include <Vector>
 #include <queue>
+#include<bits/stdc++.h>
 NDConverter::NDConverter(NFA* nfa)
 {
     //ctor
     this->nfa = nfa;
+
 }
 
-/*void NDConverter::convert()
+void NDConverter::convert()
 {
-    set<char> inputSymbols = nfa.getSymbols();
-    int stateCounter = 0;
+    acceptStates = nfa->getAcceptStates();
+    inputSymbols = nfa->getSymbols();
     int TNum = 0;
-    set<int> T = nfa.epsloneClosure(nfa.getStartState());
+    set<int> T = nfa->epsloneClosure(nfa->getStartState());
     vector< set<int> > Dstates;
     set<char> :: iterator it = inputSymbols.begin();
     queue< set<int> > unmarkedStates;
     Dstates.push_back(T);
     unmarkedStates.push(T);
-    dfa = DFA(inputSymbols, 0, stateCounter);
+    dfa = DFA();
+    dfa.setParameters(inputSymbols, TNum);
+
+    if(checkAccept(T)){
+        dfa.accept(TNum);
+     }
     // subset construction algorithm
     while(!unmarkedStates.empty()){
             // mark state T by removing it from unmarked states
@@ -27,33 +34,50 @@ NDConverter::NDConverter(NFA* nfa)
             unmarkedStates.pop();
             // find its number in the dfa states
             vector< set<int> >::iterator itr = find(Dstates.begin(), Dstates.end(), T);
-            Tnum = distance(Dstates.begin(), itr);
+            TNum = distance(Dstates.begin(), itr);
         // Iterate over the input symbols
         while (it != inputSymbols.end())
         {
-        set<int> U = nfa.epsloneClosure(nfa.inputMove(T,*it));
-        vector< set<int> >::iterator i = Dstates.begin();
-        while (i != Dstates.end())
-        {
-            if(U == *i){
-                //found -> add transition from T to U under *it
-                dfa.addTransition(T,)
+            set<int> U = nfa->epsloneClosure(nfa->inputMove(T,*it));
+            vector< set<int> >::iterator i = Dstates.begin();
+            while (i != Dstates.end())
+            {
+                if(U == *i){
+                //found -> add transition from T to U under char *it
+                int UNum = distance(Dstates.begin(), i);
+                dfa.addTransition(TNum, UNum, *it);
                 break;
+                }
+                i++;
             }
-            i++;
-        }
-        if(i == Dstates.end()){//not found -> add U as a new state to Dstates
-             Dstates.push_back(U);
-             unmarkedStates.push(U);
-             stateCounter++;
+            if(i == Dstates.end()){
+                //not found -> add U as a new state to Dstates & add transition from T to U under char *it
+                Dstates.push_back(U);
+                unmarkedStates.push(U);
+                int UNum = Dstates.size()- 1;
+                dfa.addTransition(TNum, UNum, *it);
+                if(checkAccept(U)){
+                 dfa.accept(UNum);
+                }
             }
-            it++;
+
+         it++;
         }
     }
-//states.find(U) != states.end()
-//vector<int>::iterator itr = std::find(v.begin(), v.end(), key)---> distance(v.begin(), itr)
-}*/
+}
 DFA* NDConverter::getDFA()
 {
-    return this->dfa;
+    return &dfa;
+}
+bool NDConverter::checkAccept(set<int> U){
+    set<int>::iterator  itr1 = acceptStates.begin();
+        while (itr1 != acceptStates.end())
+        {
+            set<int>::iterator itr2 = U.find(*itr1);
+            if (itr2 != U.end()){
+                return true;
+            }
+            itr1++;
+        }
+        return false;
 }

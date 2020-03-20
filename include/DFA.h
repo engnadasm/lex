@@ -10,7 +10,8 @@ class DFA
 {
     public:
         /* DFA construction functions */
-        DFA(set<char> inputs,int initState); //states from 0 to n-1, initial state usually 0
+        DFA(); //states from 0 to n-1, initial state usually 0
+        void setParameters(set<char> inputs,int initState);
         void setNumStates(int num);
         void addTransition(int s1, int s2, char input); //transition from s1 to s2 under input character
         void accept(int state); //set state state accept state
@@ -30,9 +31,6 @@ class DFA
     protected:
 
     private:
-        set<char> inputs;
-        int numStates;
-        int initState;
 };
 
 #endif // DFA_H
