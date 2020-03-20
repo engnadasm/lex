@@ -3,6 +3,7 @@
 NFA::NFA()
 {
     //ctor
+	//comment for pushing
 }
 
 void NFA::dashOperator(char a, char b){
