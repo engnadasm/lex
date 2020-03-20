@@ -2,6 +2,7 @@
 #define DFA_H
 #include <set>
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ class DFA
         bool isAccept(int state);
         string getToken(); //get token reached by a sequence of move calls
         void reset(); //reset to initial state deleting the token reached.
+        bool isDead();
 
     protected:
 
@@ -34,6 +36,12 @@ class DFA
         set<int> acceptStates;
         int numStates;
         int initState;
+        int currentState;
+        string lastValidToken;
+        string inputSequence;
+        //(Key:state, value: (key: input, value:next state))
+        unordered_map<int , unordered_map<char, int>> transitionTable;
+        void initTransitionTable();
 };
 
 #endif // DFA_H

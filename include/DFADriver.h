@@ -20,7 +20,8 @@ class DFADriver
 
     private:
         DFA* dfa;
-        set<string> tokens;
+        vector<string> tokens;
+        string inputBuf;
 };
 
 #endif // DFADRIVER_H
