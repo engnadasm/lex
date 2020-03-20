@@ -7,12 +7,13 @@ using namespace std;
 class DFAMinimzer
 {
     public:
-        DFAMinimzer(DFA dfa);
+        DFAMinimzer(DFA* dfa);
         void minimize();
-        DFA getMinimizedDFA();
+        DFA* getMinimizedDFA();
     protected:
 
     private:
+        DFA* dfa;
 };
 
 #endif // DFAMINIMZER_H

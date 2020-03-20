@@ -9,7 +9,7 @@ using namespace std;
 class DFADriver
 {
     public:
-        DFADriver(DFA dfa);
+        DFADriver(DFA* dfa);
         void setInputFile(string path);
         void start();
         set<string> getTokens();
@@ -19,6 +19,8 @@ class DFADriver
     protected:
 
     private:
+        DFA* dfa;
+        set<string> tokens;
 };
 
 #endif // DFADRIVER_H

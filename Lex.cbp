@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="src" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -20,7 +22,23 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/DFA.h" />
+		<Unit filename="include/DFADriver.h" />
+		<Unit filename="include/DFAMinimzer.h" />
+		<Unit filename="include/NDConverter.h" />
+		<Unit filename="include/NFA.h" />
+		<Unit filename="include/Parser.h" />
+		<Unit filename="include/SymbolTable.h" />
+		<Unit filename="include/SymbolTableEntry.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/DFA.cpp" />
+		<Unit filename="src/DFADriver.cpp" />
+		<Unit filename="src/DFAMinimzer.cpp" />
+		<Unit filename="src/NDConverter.cpp" />
+		<Unit filename="src/NFA.cpp" />
+		<Unit filename="src/Parser.cpp" />
+		<Unit filename="src/SymbolTable.cpp" />
+		<Unit filename="src/SymbolTableEntry.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

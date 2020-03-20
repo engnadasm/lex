@@ -11,12 +11,12 @@ class Parser
     public:
         Parser(string path);
         void parse();
-        NFA getCombinedNFA();
+        NFA* getCombinedNFA();
 
     protected:
 
     private:
-        NFA parseLine(string line);
+        NFA* parseLine(string line);
 };
 
 #endif // PARSER_H

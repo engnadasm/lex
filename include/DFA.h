@@ -31,6 +31,7 @@ class DFA
 
     private:
         set<char> inputs;
+        set<int> acceptStates;
         int numStates;
         int initState;
 };
