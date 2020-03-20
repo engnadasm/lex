@@ -21,11 +21,10 @@ void NDConverter::convert()
     queue< set<int> > unmarkedStates;
     Dstates.push_back(T);
     unmarkedStates.push(T);
-    dfa = DFA();
-    dfa.setParameters(inputSymbols, TNum);
+    dfa = new DFA(inputSymbols, TNum);
 
     if(checkAccept(T)){
-        dfa.accept(TNum);
+        dfa->accept(TNum);
      }
     // subset construction algorithm
     while(!unmarkedStates.empty()){
@@ -45,7 +44,7 @@ void NDConverter::convert()
                 if(U == *i){
                 //found -> add transition from T to U under char *it
                 int UNum = distance(Dstates.begin(), i);
-                dfa.addTransition(TNum, UNum, *it);
+                dfa->addTransition(TNum, UNum, *it);
                 break;
                 }
                 i++;
@@ -55,9 +54,9 @@ void NDConverter::convert()
                 Dstates.push_back(U);
                 unmarkedStates.push(U);
                 int UNum = Dstates.size()- 1;
-                dfa.addTransition(TNum, UNum, *it);
+                dfa->addTransition(TNum, UNum, *it);
                 if(checkAccept(U)){
-                 dfa.accept(UNum);
+                 dfa->accept(UNum);
                 }
             }
 
@@ -67,7 +66,7 @@ void NDConverter::convert()
 }
 DFA* NDConverter::getDFA()
 {
-    return &dfa;
+    return dfa;
 }
 bool NDConverter::checkAccept(set<int> U){
     set<int>::iterator  itr1 = acceptStates.begin();

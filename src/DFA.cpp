@@ -1,20 +1,35 @@
 #include "../include/DFA.h"
 
-DFA::DFA(){
-
-}
-void DFA::setParameters(set<char> inputs,int initState){
+DFA::DFA(set<char> inputs, int initState){
     this->inputs = inputs;
     this->initState = initState;
+    this->currentState = initState;
+    lastValidToken = "";
+    inputSequence = "";
+    initTransitionTableEntry(initState);
 }
-void DFA::setNumStates(int num){
 
+void DFA::initTransitionTableEntry(int state){
+    unordered_map<char, int> trans;
+    transitionTable[state] = trans;
+    for(auto c: inputs){
+        transitionTable[state][(char)c] = -1;
+    }
 }
+
 void DFA::addTransition(int s1, int s2, char input){
-
+    if(transitionTable.find(s1) == transitionTable.end()){
+        initTransitionTableEntry(s1);
+    }
+    if(transitionTable.find(s2) == transitionTable.end()){
+        initTransitionTableEntry(s2);
+    }
+    transitionTable[s1][input] = s2;
 }
 void DFA::accept(int state){
-
+    if(transitionTable.find(state) != transitionTable.end()){
+        acceptStates.insert(state);
+    }
 }
 set<int> DFA::getAcceptStates(){
     return acceptStates;
@@ -23,23 +38,39 @@ set<char> DFA::getInputSymbols(){
     return inputs;
 }
 int DFA::getInitState(){
-    return 0;
+    return initState;
 }
 int DFA::getNumStates(){
-    return 0;
+    return transitionTable.size();
 }
 int DFA::getNextState(int state, char input){
-    return 0;
+    return transitionTable[state][input];
 }
 int DFA::getCurrentState(){
-    return 0;
+    return currentState;
 }
 bool DFA::isAccept(int state){
-    return false;
+    return (acceptStates.find(state) != acceptStates.end());
 }
 string DFA::getToken(){
-    return NULL;
+    return lastValidToken;
 }
 void DFA::reset(){
+    lastValidToken = "";
+    inputSequence = "";
+    currentState = initState;
+}
 
+bool DFA::isDead(){
+    return currentState == -1;
+}
+
+int DFA::move(char input){
+    if(inputs.find(input) == inputs.end()) return -1;
+    currentState = transitionTable[currentState][input];
+    inputSequence += input;
+    if(isAccept(currentState)){
+        lastValidToken = inputSequence;
+    }
+    return currentState;
 }

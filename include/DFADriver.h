@@ -1,7 +1,7 @@
 #ifndef DFADRIVER_H
 #define DFADRIVER_H
 #include <string>
-#include <set>
+#include <vector>
 #include "DFA.h"
 
 using namespace std;
@@ -12,7 +12,7 @@ class DFADriver
         DFADriver(DFA* dfa);
         void setInputFile(string path);
         void start();
-        set<string> getTokens();
+        vector<string> getTokens();
         //functions to return symbol table
 
 
@@ -20,7 +20,8 @@ class DFADriver
 
     private:
         DFA* dfa;
-        set<string> tokens;
+        vector<string> tokens;
+        string inputBuf;
 };
 
 #endif // DFADRIVER_H
