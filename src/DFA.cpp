@@ -1,10 +1,12 @@
 #include "../include/DFA.h"
 
-DFA::DFA(set<char> inputs,int initState){
+DFA::DFA(){
+
+}
+void DFA::setParameters(set<char> inputs,int initState){
     this->inputs = inputs;
     this->initState = initState;
 }
-
 void DFA::setNumStates(int num){
 
 }
