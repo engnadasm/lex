@@ -1,6 +1,15 @@
 #include "../include/DFADriver.h"
 
-DFADriver::DFADriver(DFA dfa)
+DFADriver::DFADriver(DFA* dfa)
 {
-    //ctor
+    this->dfa=dfa;
+}
+void DFADriver::setInputFile(string path){
+
+}
+void DFADriver::start(){
+
+}
+set<string> DFADriver::getTokens(){
+    return tokens;
 }
