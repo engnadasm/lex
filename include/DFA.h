@@ -14,9 +14,9 @@ class DFA
         DFA(set<char> inputs, int initState); //states from 0 to n-1, initial state usually 0
         void setNumStates(int num);
         void addTransition(int s1, int s2, char input); //transition from s1 to s2 under input character
-        void accept(int state); //set state state accept state
+        void accept(int state, string className); //set state state accept state
 
-        set<int> getAcceptStates();
+        unordered_map<int, string> getAcceptStates();
         set<char> getInputSymbols();
         int getInitState();
         int getNumStates();
@@ -33,7 +33,7 @@ class DFA
 
     private:
         set<char> inputs;
-        set<int> acceptStates;
+        unordered_map<int, string> acceptStates;
         int initState;
         int currentState;
         string lastValidToken;

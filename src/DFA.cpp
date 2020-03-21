@@ -26,12 +26,12 @@ void DFA::addTransition(int s1, int s2, char input){
     }
     transitionTable[s1][input] = s2;
 }
-void DFA::accept(int state){
+void DFA::accept(int state, string className){
     if(transitionTable.find(state) != transitionTable.end()){
-        acceptStates.insert(state);
+        acceptStates[state] = className;
     }
 }
-set<int> DFA::getAcceptStates(){
+unordered_map<int, string> DFA::getAcceptStates(){
     return acceptStates;
 }
 set<char> DFA::getInputSymbols(){
