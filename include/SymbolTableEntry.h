@@ -10,6 +10,7 @@ class SymbolTableEntry
     protected:
 
     private:
+
 };
 
 #endif // SYMBOLTABLEENTRY_H

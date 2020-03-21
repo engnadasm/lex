@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "DFA.h"
-
+#include "SymbolTable.h"
 using namespace std;
 
 class DFADriver
@@ -22,6 +22,7 @@ class DFADriver
         DFA* dfa;
         vector<string> tokens;
         string inputBuf;
+        SymbolTable* symbolTable;
 };
 
 #endif // DFADRIVER_H

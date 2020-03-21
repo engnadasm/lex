@@ -5,6 +5,7 @@ DFA::DFA(set<char> inputs, int initState){
     this->initState = initState;
     this->currentState = initState;
     lastValidToken = "";
+    lexeme = "";
     inputSequence = "";
     initTransitionTableEntry(initState);
 }
@@ -58,6 +59,7 @@ string DFA::getToken(){
 void DFA::reset(){
     lastValidToken = "";
     inputSequence = "";
+    lexeme = "";
     currentState = initState;
 }
 
@@ -70,7 +72,12 @@ int DFA::move(char input){
     currentState = transitionTable[currentState][input];
     inputSequence += input;
     if(isAccept(currentState)){
-        lastValidToken = inputSequence;
+        lexeme = inputSequence;
+        // get token from nfa
+        //lastValidToken = inputSequence;
     }
     return currentState;
+}
+string DFA::getLexeme(){
+    return lexeme;
 }

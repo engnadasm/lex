@@ -26,6 +26,7 @@ class DFA
         int move(char input); //return new state
         bool isAccept(int state);
         string getToken(); //get token reached by a sequence of move calls
+        string getLexeme(); //get lexeme reached by a sequence of move calls
         void reset(); //reset to initial state deleting the token reached.
         bool isDead();
 
@@ -37,6 +38,7 @@ class DFA
         int initState;
         int currentState;
         string lastValidToken;
+        string lexeme;
         string inputSequence;
         //(Key:state, value: (key: input, value:next state))
         unordered_map<int , unordered_map<char, int>> transitionTable;
