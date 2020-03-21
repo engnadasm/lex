@@ -25,6 +25,8 @@ class NFA
         void keyword(char word[], int len); // same as above for flexibility
         void combine(NFA nfa[], int n); // combines n nfa's into one nfa keeping all the accept states.
 
+        void setName(string name);
+
         /* operations on NFA states */
         set<int> epsloneClosure(int s);
         set<int> epsloneClosure(set<int> T);

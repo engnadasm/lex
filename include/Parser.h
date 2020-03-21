@@ -16,7 +16,10 @@ class Parser
     protected:
 
     private:
-        NFA* parseLine(string line);
+        NFA parseLine(string line);
+        string path;
+        NFA* nfa;
+        static regex regdef();
 };
 
 #endif // PARSER_H
