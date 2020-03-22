@@ -20,7 +20,7 @@ void DFAMinimzer::minimize(){
     unordered_map<int, string> nonAcceptStates;
     for (int i =0 ; i< states.size();i++)
     {
-        if (dfa->isAccept(i))
+        if (!dfa->isAccept(i))
         {
             acceptStates.insert(pair<int,string>(i, states.at(i)));
             stateSet.insert(pair<char,int>(i, 0));
@@ -43,7 +43,7 @@ void DFAMinimzer::minimize(){
 
     while(flag)
     {
-        flag = false;
+        this->flag = false;
        partitions = DFAMinimzer::doPartition(partitions);
     }
 
@@ -57,14 +57,14 @@ void DFAMinimzer::minimize(){
             {
                 unordered_map<int, string> currentPartition;
                 currentPartition.insert(pair<int,string>(j,partitions[0].at(j)));
-                int firstState = j;
+                int
                 for(int k = j+1 ; k < partitions[0].size() ; k++)
                 {
-                    int secondState = k;
                     bool check = true;
                     set<char> inputs = dfa->getInputSymbols();
                     for(char charInput : inputs){
-                            if ((dfa->getNextState(firstState,charInput))!=(dfa->getNextState(secondState,charInput))){
+                            //firstState is j & secondState is k
+                            if ((dfa->getNextState(j,charInput))!=(dfa->getNextState(k,charInput))){
                                 check =false;
                                 break;
                            }
@@ -76,7 +76,7 @@ void DFAMinimzer::minimize(){
                         k--;
                     }
                     else{
-                        flag = true;
+                        this->flag = true;
                     }
                 }
                 for (int m =0; m < currentPartition.size(); m++)
