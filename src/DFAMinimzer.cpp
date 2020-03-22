@@ -57,7 +57,7 @@ void DFAMinimzer::minimize(){
             {
                 unordered_map<int, string> currentPartition;
                 currentPartition.insert(pair<int,string>(j,partitions[0].at(j)));
-                int
+                //int
                 for(int k = j+1 ; k < partitions[0].size() ; k++)
                 {
                     bool check = true;

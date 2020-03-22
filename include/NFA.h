@@ -1,6 +1,8 @@
 #ifndef NFA_H
 #define NFA_H
 #include <set>
+#include <vector>
+#include <map>
 #include <string>
 
 using namespace std;
@@ -31,6 +33,7 @@ class NFA
         set<int> epsloneClosure(int s);
         set<int> epsloneClosure(set<int> T);
         set<int> inputMove(set<int> T, char c);
+        void updateStates(NFA* nfa, int num);
 
         /* NFA Definition functions */
 
@@ -38,10 +41,22 @@ class NFA
         set<int> getStates();
         int getStartState();
         set<int> getAcceptStates();
+        vector<map<char,set<int>>> getTransitionTable();
+
+        void setSymbols(set<char> symb);
+		void setStates(set<int> updtaedStates);
+		void setStartState(int start);
+		void setAcceptStates(set<int> finalStates);
+		void setTransitionTable(vector<map<char,set<int>>> transition);
 
     protected:
 
     private:
+        int startState;
+        set<int> acceptedStates;
+        set<char> symbols;
+        set<int> states;
+        vector<map<char,set<int>>> transitionTable;
 };
 
 #endif // NFA_H
