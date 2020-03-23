@@ -68,7 +68,10 @@ bool DFA::isDead(){
 }
 
 int DFA::move(char input){
-    if(inputs.find(input) == inputs.end()) return -1;
+    if(inputs.find(input) == inputs.end()){
+            inputSequence += input;
+            return -1;
+    }
     currentState = transitionTable[currentState][input];
     inputSequence += input;
     if(isAccept(currentState)){
@@ -80,4 +83,7 @@ int DFA::move(char input){
 }
 string DFA::getLexeme(){
     return lexeme;
+}
+string DFA::getInputSequence(){
+    return inputSequence;
 }

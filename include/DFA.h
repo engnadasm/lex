@@ -27,6 +27,7 @@ class DFA
         bool isAccept(int state);
         string getToken(); //get token reached by a sequence of move calls
         string getLexeme(); //get lexeme reached by a sequence of move calls
+        string getInputSequence();
         void reset(); //reset to initial state deleting the token reached.
         bool isDead();
 

@@ -13,8 +13,8 @@ class DFADriver
         void setInputFile(string path);
         void start();
         vector<string> getTokens();
-        //functions to return symbol table
-
+        SymbolTable* getSymbolTable();
+        void produceOutputFile();
 
     protected:
 
