@@ -33,7 +33,7 @@ vector<string> Parser::segmentation(string line){
                 i++;
             }
 
-            }
+
         } else if(getOperator(line[i]) == 13){
             if(seg.size() > 0){
                 segs.push_back(seg);
@@ -84,7 +84,7 @@ void createExp(vector<string> segs){
     RDP rdp(exp, this);
     NFA expression = rdp.toNFA();
     expression.setName(className);
-    exp.push_back(expression);
+    exp.push_back(expression.getName());
 }
 void Parser::createDef(vector<string> segs){
     string className = segs[0];
@@ -153,7 +153,6 @@ int Parser::getOperator(char c){
         break;
     default:
         return 0;
-        break;
     }
 }
 

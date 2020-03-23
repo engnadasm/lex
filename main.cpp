@@ -1,6 +1,8 @@
 #include <iostream>
 #include "include/Parser.h"
-
+#include <set>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -13,5 +15,9 @@ int main()
         cout << tokens[i] << endl;
     }
     cout << "Hello world!" << endl;
+    set<char> s;
+    s.insert('\0');
+    s.insert('1');
+    cout << *s.begin() << endl;
     return 0;
 }

@@ -1,6 +1,8 @@
 #ifndef NFA_H
 #define NFA_H
 #include <set>
+#include <vector>
+#include <map>
 #include <string>
 
 using namespace std;
@@ -24,13 +26,13 @@ class NFA
         void keyword(string word); // ex: if else etc.
         void keyword(char word[], int len); // same as above for flexibility
         void combine(NFA nfa[], int n); // combines n nfa's into one nfa keeping all the accept states.
-
         void setName(string name);
 
         /* operations on NFA states */
         set<int> epsloneClosure(int s);
         set<int> epsloneClosure(set<int> T);
         set<int> inputMove(set<int> T, char c);
+        void updateStates(NFA* nfa, int num);
 
         /* NFA Definition functions */
 
@@ -38,10 +40,24 @@ class NFA
         set<int> getStates();
         int getStartState();
         set<int> getAcceptStates();
+        vector<map<char,set<int>>> getTransitionTable();
+        string getName();
+
+        void setSymbols(set<char> symb);
+		void setStates(set<int> updtaedStates);
+		void setStartState(int start);
+		void setAcceptStates(set<int> finalStates);
+		void setTransitionTable(vector<map<char,set<int>>> transition);
 
     protected:
 
     private:
+        int startState;
+        set<int> acceptedStates;
+        set<char> symbols;
+        set<int> states;
+        vector<map<char,set<int>>> transitionTable;
+        string tokenName;
 };
 
 #endif // NFA_H
