@@ -77,11 +77,11 @@ void Parser::parseSegs(vector<string> segs){
         //error
     }
 }
-void createExp(vector<string> segs){
+void Parser::createExp(vector<string> segs){
     string className = segs[0];
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
-    RDP rdp(exp, this);
+    RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setName(className);
     exp.push_back(expression.getName());
@@ -90,7 +90,7 @@ void Parser::createDef(vector<string> segs){
     string className = segs[0];
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
-    RDP rdp(exp, this);
+    RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     //expression.setName(className);
     defs[className] = expression;
@@ -100,7 +100,7 @@ void Parser::createKeywords(vector<string> segs){
         cout << s << endl;
         vector<string> temp;
         temp.push_back(s);
-        RDP rdp(temp, this);
+        RDP rdp(temp, defs);
         NFA kwNFA = rdp.toNFA();
         //save it
         s.erase(remove(s.begin(), s.end(), '\\'), s.end());
@@ -108,7 +108,6 @@ void Parser::createKeywords(vector<string> segs){
         exp.push_back(kwNFA);
     }
 }
-
 
 int Parser::getOperator(char c){
     switch(c){
@@ -156,6 +155,3 @@ int Parser::getOperator(char c){
     }
 }
 
-unordered_map<string ,NFA> Parser::getDefinitions(){
-    return this->defs;
-}

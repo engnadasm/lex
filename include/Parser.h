@@ -19,7 +19,6 @@ class Parser
         void parse();
         NFA* getCombinedNFA();
         vector<string> segmentation(string line);
-        unordered_map<string ,NFA> getDefinitions();
     protected:
 
     private:
@@ -32,6 +31,7 @@ class Parser
         vector<NFA> exp;
         unordered_map<string ,NFA> defs;
         NFA* nfa;
+
 };
 
 #endif // PARSER_H

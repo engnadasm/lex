@@ -1,9 +1,9 @@
 #include "../include/RDB.h"
 
-RDP::RDP(vector<string> tokens, Parser* parser)
+RDP::RDP(vector<string> tokens, unordered_map<string ,NFA> defs)
 {
     this->tokens = tokens;
-    this->parser = parser;
+    this->defs = defs;
     index = this->tokens.begin();
 }
 
@@ -72,8 +72,8 @@ NFA RDP::charSet(){
 
 NFA RDP::word(){
     string w = current();
-    unordered_map<string, NFA>::const_iterator it = parser->getDefinitions().find(w);
-    if(it == parser->getDefinitions().end()){
+    unordered_map<string, NFA>::const_iterator it = defs.find(w);
+    if(it == defs.end()){
         NFA nfa;
         w.erase(remove(w.begin(), w.end(), '\\'), w.end());
         nfa.concatenateOperator(w[0], w[1]);
