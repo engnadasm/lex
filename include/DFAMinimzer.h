@@ -14,14 +14,20 @@ class DFAMinimzer
         DFAMinimzer(DFA* dfa);
         void minimize();
         DFA* getMinimizedDFA();
-        vector<unordered_map<int, string>> doPartition( vector<unordered_map<int, string>> oldPartition);//Construct New Partition
     protected:
 
     private:
+        vector<unordered_map<int, string>> doPartition();//Construct New Partition
+        void oneStateOfEachGroup();
         DFA* dfa;
         bool flag = true;
-        int counter = 2;
-        map <int, int> stateSet;
+        int counter = 1;
+        map<int, int> groupStates;
+        set<char> inputs ;
+        int initState;
+        int numStates;
+        unordered_map<int, string> acceptStates;
+        unordered_map<unordered_map<int, string>, int> partitions;
 };
 
 #endif // DFAMINIMZER_H
