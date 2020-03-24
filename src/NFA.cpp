@@ -382,6 +382,9 @@ vector<map<char, set<int>>> NFA::getTransitionTable()
 string NFA::getName() {
 	return this->tokenName;
 }
+unordered_map<int, string> NFA::getAcceptedTokens() {
+	return this->acceptedOfAllNFA;
+}
 void NFA::setSymbols(set<char> symb) {
 	this->symbols = symb;
 }
