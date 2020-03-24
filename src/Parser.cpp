@@ -69,9 +69,9 @@ void Parser::parseSegs(vector<string> segs){
         segs.erase(segs.begin());
         segs.erase(segs.end()-1);
         createKeywords(segs);
-    } else if (segs[1] == ':'){
+    } else if (segs[1] == ":"){
         createDef(segs);
-    } else if (segs[1] == '='){
+    } else if (segs[1] == "="){
         createExp(segs);
     } else {
         //error

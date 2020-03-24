@@ -17,7 +17,7 @@ class DFAMinimzer
     protected:
 
     private:
-        vector<unordered_map<int, string>> doPartition();//Construct New Partition
+        unordered_map<int, unordered_map<int, string>> doPartition();//Construct New Partition
         void oneStateOfEachGroup();
         DFA* dfa;
         bool flag = true;
@@ -27,7 +27,7 @@ class DFAMinimzer
         int initState;
         int numStates;
         unordered_map<int, string> acceptStates;
-        unordered_map<unordered_map<int, string>, int> partitions;
+        unordered_map<int, unordered_map<int, string>> partitions;
 };
 
 #endif // DFAMINIMZER_H
