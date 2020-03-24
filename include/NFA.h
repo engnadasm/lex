@@ -3,6 +3,7 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <string>
 
 using namespace std;
@@ -42,9 +43,10 @@ class NFA
         set<int> getAcceptStates();
         vector<map<char,set<int>>> getTransitionTable();
         string getName();
+        unordered_map<int, string> getAcceptedTokens();
 
         void setSymbols(set<char> symb);
-		void setStates(set<int> updtaedStates);
+		void setStates(set<int> updateStates);
 		void setStartState(int start);
 		void setAcceptStates(set<int> finalStates);
 		void setTransitionTable(vector<map<char,set<int>>> transition);
@@ -58,6 +60,7 @@ class NFA
         set<int> states;
         vector<map<char,set<int>>> transitionTable;
         string tokenName;
+        unordered_map<int, string> acceptedOfAllNFA;
 };
 
 #endif // NFA_H

@@ -99,7 +99,7 @@ void NFA::orOperator(NFA nfa1, NFA nfa2) {
 		}
 		this->transitionTable.at(i) = temp;
 	}
-	set<int> indexOfAccepted = nfa2.getAcceptStates();
+	indexOfAccepted = nfa2.getAcceptStates();
 	for (int i : indexOfAccepted) {
 		map<char, set<int>> temp = this->transitionTable.at(i);
 		if (temp.find('\0') == temp.end()) {
@@ -134,7 +134,7 @@ void NFA::concatenateOperator(char a, char b) {
 }
 void NFA::concatenateOperator(NFA nfa, char c) {
 	set<int> indexOfStates = nfa.getStates();
-	set<int> inputChars = nfa.getSymbols();
+	set<char> inputChars = nfa.getSymbols();
 	vector<map<char, set<int>>> transition = nfa.getTransitionTable();
 	set<int> indexOfLastStates = nfa.getAcceptStates();
 	map<char, set<int>> newState;
@@ -238,29 +238,78 @@ void NFA::starOperator(NFA nfa) {
 	this->symbols.insert('\0');
 }
 void NFA::keyword(string word) {
-
+	map<char, set<int>> wordStates[word.size() + 1];
+	for (int i = 0; i < word.size(); i++) {
+		wordStates[i].insert( { word.at(i), { i + 1 } });
+	}
 }
 void NFA::keyword(char word[], int len) {
-
+	map<char, set<int>> wordStates[len + 1];
+	for (int i = 0; i < len; i++) {
+		wordStates[i].insert( { word[i], { i + 1 } });
+	}
 }
 void NFA::combine(NFA nfa[], int n) {
-
+	map<char, set<int>> stateZero;
+	int num = 1;
+	stateZero.insert( { '\0', { 1 } });
+	this->transitionTable.push_back(stateZero);
+	for (int i = 0; i < n; i++) {
+		num = num + i * nfa[i].getStates().size();
+		NFA* pnfa = &nfa[i];
+		this->updateStates(pnfa, num);
+		for (int j = 0; j < nfa[i].getStates().size(); j++) {
+			this->transitionTable.push_back(nfa[i].getTransitionTable().at(j));
+		}
+		for (int j : nfa[i].getAcceptStates()) {
+			this->acceptedOfAllNFA.insert( { j, nfa[i].getName() });
+			this->acceptedStates.insert(j);
+		}
+		for (char c : nfa[i].getSymbols()) {
+			this->symbols.insert(c);
+		}
+		this->transitionTable.at(0).find('\0')->second.insert(
+				nfa[i].getStartState());
+		for (int j : nfa[i].getStates()) {
+			this->states.insert(j);
+		}
+	}
 }
 void NFA::setName(string name) {
 	this->tokenName = name;
 }
 set<int> NFA::epsloneClosure(int s) {
-
+	map<char, set<int>> state = this->transitionTable.at(s);
+	map<char, set<int>>::iterator it = state.find('\0');
+	if (it == state.end()) {
+		set<int> s;
+		return s;
+	} else {
+		set<int> resultedStates = it->second;
+		resultedStates.insert(s);
+		return resultedStates;
+	}
 }
 set<int> NFA::epsloneClosure(set<int> T) {
-
+	set<int> resultedStates;
+	for (int i : T) {
+		set<int> temp = this->epsloneClosure(i);
+		if (!temp.empty()) {
+			for (int j : temp) {
+				resultedStates.insert(j);
+			}
+		}
+	}
+	return resultedStates;
 }
 set<int> NFA::inputMove(set<int> T, char c) {
 	set<int> resultedStates;
 	for (int i : T) {
 		map<char, set<int>> m = this->transitionTable.at(i);
-		for (int j : m.find(c)->second) {
-			resultedStates.insert(j);
+		if (m.find(c) != m.end()) {
+			for (int j : m.find(c)->second) {
+				resultedStates.insert(j);
+			}
 		}
 	}
 	return resultedStates;
@@ -294,8 +343,8 @@ void NFA::updateStates(NFA* nfa, int num) {
 	nfa->setStates(allStates);
 	/*update the transition states*/
 	vector<map<char, set<int>>> transition = nfa->getTransitionTable();
-	for (int j = 0; j < transition.size(); j++) {
-		map<char, set<int>> m = transition.at(j);
+	for (int k = 0; k < transition.size(); k++) {
+		map<char, set<int>> m = transition.at(k);
 		for (map<char, set<int>>::iterator it = m.begin(); it != m.end();
 				it++) {
 			set<int> temp = it->second;
@@ -336,7 +385,7 @@ string NFA::getName() {
 void NFA::setSymbols(set<char> symb) {
 	this->symbols = symb;
 }
-void NFA::setStates(set<int> updtaedStates) {
+void NFA::setStates(set<int> updateStates) {
 	this->states = updateStates;
 }
 void NFA::setStartState(int start) {
