@@ -30,7 +30,7 @@ class DFA
         string getInputSequence();
         void reset(); //reset to initial state deleting the token reached.
         bool isDead();
-
+        void printTransitionTable();//write the transition table to a file
     protected:
 
     private:

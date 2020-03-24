@@ -1,5 +1,5 @@
 #include "../include/DFA.h"
-
+#include <fstream>
 DFA::DFA(set<char> inputs, int initState){
     this->inputs = inputs;
     this->initState = initState;
@@ -86,3 +86,19 @@ string DFA::getLexeme(){
 string DFA::getInputSequence(){
     return inputSequence;
 }
+void DFA::printTransitionTable(){
+ofstream myfile ("transition table.txt");
+  if (myfile.is_open())
+  {
+      for (auto& state: transitionTable) {
+            for (auto& transition: state.second)
+            {
+                myfile << state.first << " : ";
+                myfile << transition.first << " -> " << transition.second << ", ";
+            }
+         myfile << "\n";
+      }
+    myfile.close();
+  }
+  //else cout << "Unable to open file";
+  }
