@@ -13,6 +13,7 @@ NDConverter::NDConverter(NFA* nfa)
 void NDConverter::convert()
 {
     acceptStates = nfa->getAcceptStates();
+
     inputSymbols = nfa->getSymbols();
     int TNum = 0;
     set<int> T = nfa->epsloneClosure(nfa->getStartState());
@@ -24,7 +25,7 @@ void NDConverter::convert()
     dfa = new DFA(inputSymbols, TNum);
 
     if(checkAccept(T)){
-        dfa->accept(TNum);
+        dfa->accept(TNum,nfa->getAcceptedTokens()[TNum]);
      }
     // subset construction algorithm
     while(!unmarkedStates.empty()){
@@ -56,7 +57,7 @@ void NDConverter::convert()
                 int UNum = Dstates.size()- 1;
                 dfa->addTransition(TNum, UNum, *it);
                 if(checkAccept(U)){
-                 dfa->accept(UNum);
+                 dfa->accept(UNum,nfa->getAcceptedTokens()[UNum]);
                 }
             }
 

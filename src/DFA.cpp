@@ -76,8 +76,7 @@ int DFA::move(char input){
     inputSequence += input;
     if(isAccept(currentState)){
         lexeme = inputSequence;
-        // get token from nfa
-        //lastValidToken = inputSequence;
+        lastValidToken = acceptStates[currentState];
     }
     return currentState;
 }

@@ -24,10 +24,10 @@
 		<Unit filename="include/DFA.h" />
 		<Unit filename="include/DFADriver.h" />
 		<Unit filename="include/DFAMinimzer.h" />
+		<Unit filename="include/ErrorMessages.h" />
 		<Unit filename="include/NDConverter.h" />
 		<Unit filename="include/NFA.h" />
 		<Unit filename="include/Parser.h" />
-		<Unit filename="include/RDB.h" />
 		<Unit filename="include/SymbolTable.h" />
 		<Unit filename="include/SymbolTableEntry.h" />
 		<Unit filename="main.cpp" />
@@ -37,7 +37,6 @@
 		<Unit filename="src/NDConverter.cpp" />
 		<Unit filename="src/NFA.cpp" />
 		<Unit filename="src/Parser.cpp" />
-		<Unit filename="src/RDB.cpp" />
 		<Unit filename="src/SymbolTable.cpp" />
 		<Unit filename="src/SymbolTableEntry.cpp" />
 		<Extensions>
