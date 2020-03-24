@@ -274,10 +274,14 @@ void NFA::combine(NFA nfa[], int n) {
 	int num = 1;
 	stateZero.insert( { '\0', { 1 } });
 	this->transitionTable.push_back(stateZero);
+	this->states.insert(0);
 	for (int i = 0; i < n; i++) {
-		num = num + i * nfa[i].getStates().size();
+		if(i == 0)
+            num = 1;
+        else
+            num = num + nfa[i-1].getStates().size();
 		NFA* pnfa = &nfa[i];
-		this->updateStates(pnfa, num);
+		nfa[i].updateStates(pnfa, num);
 		for (int j = 0; j < nfa[i].getStates().size(); j++) {
 			this->transitionTable.push_back(nfa[i].getTransitionTable().at(j));
 		}
@@ -354,7 +358,7 @@ void NFA::updateStates(NFA* nfa, int num) {
 	n = allStates.size();
 	int arr[n];
 	j = 0;
-	for (int i : final) {
+	for (int i : allStates) {
 		arr[j] = i + num;
 		j++;
 	}
@@ -420,4 +424,3 @@ void NFA::setAcceptStates(set<int> finalStates) {
 void NFA::setTransitionTable(vector<map<char, set<int>>> transition) {
 	this->transitionTable = transition;
 }
-
