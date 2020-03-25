@@ -5,6 +5,7 @@ RDP::RDP(vector<string> tokens, unordered_map<string ,NFA> defs)
     this->tokens = tokens;
     this->defs = defs;
     index = this->tokens.begin();
+
 }
 
 NFA RDP::toNFA(){
@@ -28,7 +29,9 @@ NFA RDP::concat(){
 NFA RDP::unary(){
     NFA nfa = primary();
     if(match("+")){
+        cout << "plus operator" << endl;
         nfa.plusOperator(nfa);
+        cout << "ended plus operator" << endl;
     } else if(match("*")){
         nfa.starOperator(nfa);
     }
@@ -49,6 +52,7 @@ NFA RDP::primary(){
         }
         return nfa;
     } else {
+        cout << "returning a word" << endl;
         return word();
     }
 
@@ -72,6 +76,7 @@ NFA RDP::charSet(){
 
 NFA RDP::word(){
     string w = current();
+    cout << "the word is: " << w << endl;
     unordered_map<string, NFA>::const_iterator it = defs.find(w);
     if(it == defs.end()){
         NFA nfa;
@@ -82,6 +87,7 @@ NFA RDP::word(){
         }
         return nfa;
     } else {
+        cout << "found a definition!" << endl;
         return it->second;
     }
 }

@@ -9,7 +9,9 @@ void Parser::parse(){
     ifstream file(path);
     while(getline(file, line)){
         vector<string> segs = segmentation(line);
+        cout << "parsing line:  " << line << endl;
         parseSegs(segs);
+        cout << "finished-------------------------------" << endl;
     }
     file.close();
     NFA arr[exp.size()];
@@ -72,6 +74,7 @@ void Parser::parseSegs(vector<string> segs){
     } else if (segs[1] == ":"){
         createExp(segs);
     } else if (segs[1] == "="){
+        cout << "parsing a definition" << endl;
         createDef(segs);
     } else {
         //error
@@ -88,8 +91,10 @@ void Parser::createExp(vector<string> segs){
 }
 void Parser::createDef(vector<string> segs){
     string className = segs[0];
+    cout << "definition name = " << className << endl;
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
+    cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     //expression.setName(className);

@@ -2,8 +2,10 @@
 #define RDB_H
 #include <vector>
 #include <algorithm>
+#include <string>
+#include <iostream>
 #include "NFA.h"
-
+using namespace std;
 
 class RDP
 {
