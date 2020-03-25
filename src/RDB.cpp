@@ -56,6 +56,7 @@ NFA RDP::primary(){
         cout <<"returning a char" <<endl;
         return charSet();
     } else if(match("(")){
+        cout << "a ( is found" << endl;
         nfa = toNFA();
         if(!match(")")){
             //error
@@ -138,10 +139,6 @@ bool RDP::isOperator(){
     } else if((*index) == "+"){
         return true;
     } else if((*index) == "*"){
-        return true;
-    } else if((*index) == "("){
-        return true;
-    } else if((*index) == ")"){
         return true;
     }
     return false;
