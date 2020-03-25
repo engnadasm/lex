@@ -11,8 +11,10 @@ RDP::RDP(vector<string> tokens, unordered_map<string ,NFA> defs)
 NFA RDP::toNFA(){
     NFA nfa = concat();
     while(match("|")){
+        NFA temp;
         NFA right = concat();
-        nfa.orOperator(nfa, right);
+        temp.orOperator(nfa, right);
+        nfa = temp;
     }
     return nfa;
 }
@@ -20,20 +22,25 @@ NFA RDP::toNFA(){
 NFA RDP::concat(){
     NFA nfa = unary();
     while(!isOperator() && index != tokens.end()){
+        NFA temp;
         NFA right = unary();
-        nfa.concatenateOperator(nfa, right);
+        cout << "concatenating with a new unary" <<endl;
+        temp.concatenateOperator(nfa, right);
+        cout << "concatenation success" <<endl;
+        nfa = temp;
     }
     return nfa;
 }
 
 NFA RDP::unary(){
-    NFA nfa = primary();
+    NFA p = primary();
+    NFA nfa;
     if(match("+")){
         cout << "plus operator" << endl;
-        nfa.plusOperator(nfa);
+        nfa.plusOperator(p);
         cout << "ended plus operator" << endl;
     } else if(match("*")){
-        nfa.starOperator(nfa);
+        nfa.starOperator(p);
     }
     return nfa;
 }
@@ -44,6 +51,7 @@ NFA RDP::primary(){
         nfa.concatenateOperator('\0', '\0');
         return nfa;
     } else if(isChar()){
+        cout <<"returning a char" <<endl;
         return charSet();
     } else if(match("(")){
         nfa = toNFA();
@@ -63,6 +71,7 @@ NFA RDP::charSet(){
     w.erase(remove(w.begin(), w.end(), '\\'), w.end());
     NFA nfa;
     char left = w[0];
+    cout << "the char is  " << left << endl;
     if(match("-")){
         w = current();
         w.erase(remove(w.begin(), w.end(), '\\'), w.end());
@@ -88,7 +97,9 @@ NFA RDP::word(){
         return nfa;
     } else {
         cout << "found a definition!" << endl;
-        return it->second;
+        NFA* nfa;
+        nfa = new NFA(it->second);
+        return *nfa;
     }
 }
 

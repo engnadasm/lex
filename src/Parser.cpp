@@ -72,6 +72,7 @@ void Parser::parseSegs(vector<string> segs){
         segs.erase(segs.end()-1);
         createKeywords(segs);
     } else if (segs[1] == ":"){
+        cout << "parsing an expression" << endl;
         createExp(segs);
     } else if (segs[1] == "="){
         cout << "parsing a definition" << endl;
@@ -82,8 +83,10 @@ void Parser::parseSegs(vector<string> segs){
 }
 void Parser::createExp(vector<string> segs){
     string className = segs[0];
+    cout << "expression name = " << className << endl;
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
+    cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setName(className);
