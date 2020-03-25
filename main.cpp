@@ -17,6 +17,40 @@ int main()
 	Parser p(rulesPath);
 	p.parse();
 	NFA* nfaCombined = p.getCombinedNFA();
+	int startState = nfaCombined->getStartState();
+    set<int> acceptedStates = nfaCombined->getAcceptStates();
+    set<char> symbols = nfaCombined->getSymbols();
+    set<int> states = nfaCombined->getStates();
+    vector<map<char,set<int>>> transitionTable = nfaCombined->getTransitionTable();
+    string tokenName = nfaCombined->getName();
+    unordered_map<int, string> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
+    cout<<"start state: "<<startState<<endl;
+    cout<<"accepted states: ";
+    for(int i : acceptedStates)
+        cout<< i << " ";
+    cout<<endl;
+    cout<< "symbols: ";
+    for(char c : symbols)
+        cout<< c << " ";
+    cout<<endl;
+    cout<<"states: ";
+    for(int i : states)
+        cout<< i << " ";
+    cout<<endl;
+    cout<<"transition Table: "<<endl;
+    for(int i = 0; i < transitionTable.size(); i++){
+        map<char, set<int>> m = transitionTable.at(i);
+        for(map<char, set<int>>::iterator it = m.begin(); it!=m.end(); it++){
+            cout<<"state: "<< i <<" takes input: "<<it->first<< " and go to state: ";
+            for(int j : it->second){
+                cout<<j<< " ";
+            }
+            cout<<endl;
+        }
+    }
+    for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
+            cout<<"final state: "<< it->first <<" token Name: " << it->second << endl;
+    }
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();

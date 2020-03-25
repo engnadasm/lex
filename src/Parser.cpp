@@ -121,7 +121,7 @@ void Parser::createExp(vector<string> segs){
             cout<<endl;
         }
     }
-    exp.push_back(expression.getName());
+    this->exp.push_back(expression);
 }
 void Parser::createDef(vector<string> segs){
     string className = segs[0];
