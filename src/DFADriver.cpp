@@ -45,7 +45,7 @@ void DFADriver::start(){
             index++;
          //insert identifiers into symbol table
             if(token == "id"){
-                symbolTable->insert(lexeme);
+                symbolTable->insert(lexeme, token);
             }
             j = j + token.size();
         }

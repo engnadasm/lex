@@ -13,7 +13,7 @@ class SymbolTable
         SymbolTable();
         void free();
         SymbolTableEntry* lookup(string symbol);
-        SymbolTableEntry* insert(string symbol);
+        SymbolTableEntry* insert(string symbol, string className);
         //set attributes
         //get attributes
 
