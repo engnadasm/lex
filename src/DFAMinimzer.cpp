@@ -10,6 +10,8 @@
 DFAMinimzer::DFAMinimzer(DFA* dfa)
 {
     this->dfa = dfa;
+    this->numStates = dfa->getNumStates();
+    cout << this->numStates << endl;
 }
 void DFAMinimzer::minimize()
 {
@@ -17,35 +19,21 @@ void DFAMinimzer::minimize()
     this->initState = dfa->getInitState();
     this->numStates = dfa->getNumStates();
     this->acceptStates = dfa->getAcceptStates();
-    /*void addTransition(int s1, int s2, char input); //transition from s1 to s2 under input character
-        void accept(int state, string className); //set state state accept state
-
-        unordered_map<int, string> getAcceptStates();
-        set<char> getInputSymbols();
-        int getInitState();
-        int getNumStates();
-        int getNextState(int state, char input); // return -1 if dead state
-
-        int getCurrentState(); // return current state or -1 if dead
-        int move(char input); //return new state
-        bool isAccept(int state);
-        string getToken(); //get token reached by a sequence of move calls
-        string getLexeme(); //get lexeme reached by a sequence of move calls
-        string getInputSequence();
-        void reset(); //reset to initial state deleting the token reached.
-        bool isDead();*/
     unordered_map<int, string> nonAcceptStates;
+    cout << this->numStates<< endl;
     for (int i =0 ; i< this->numStates; i++)
     {
         if (!this->dfa->isAccept(i))
         {
+            cout <<  "nonAccept : " << i << endl;
             nonAcceptStates.insert(pair<int,string>(i, ""));
             groupStates.insert(pair<int,int>(i, 0));
         }
         else
         {
-            groupStates.insert(pair<int,int>(i, this->counter));
-            this->counter++;
+            cout <<  "Accept : " << i << endl;
+            groupStates.insert(pair<int,int>(i, 1));
+            //this->counter++;
         }
     }
 
