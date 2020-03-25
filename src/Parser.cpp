@@ -1,5 +1,5 @@
 #include "../include/Parser.h"
-
+#include <iostream>
 Parser::Parser(string path)
 {
     this->path = path;
@@ -90,6 +90,37 @@ void Parser::createExp(vector<string> segs){
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setName(className);
+     int startState = expression.getStartState();
+    set<int> acceptedStates = expression.getAcceptStates();
+    set<char> symbols = expression.getSymbols();
+    set<int> states = expression.getStates();
+    vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
+    string tokenName = expression.getName();
+    unordered_map<int, string> acceptedOfAllNFA = expression.getAcceptedTokens();
+    cout<<"start state: "<<startState<<endl;
+    cout<<"accepted states: ";
+    for(int i : acceptedStates)
+        cout<< i << " ";
+    cout<<endl;
+    cout<< "symbols: ";
+    for(char c : symbols)
+        cout<< c << " ";
+    cout<<endl;
+    cout<<"states: ";
+    for(int i : states)
+        cout<< i << " ";
+    cout<<endl;
+    cout<<"transition Table: "<<endl;
+    for(int i = 0; i < transitionTable.size(); i++){
+        map<char, set<int>> m = transitionTable.at(i);
+        for(map<char, set<int>>::iterator it = m.begin(); it!=m.end(); it++){
+            cout<<"state: "<< i <<" takes input: "<<it->first<< " and go to state: ";
+            for(int j : it->second){
+                cout<<j<< " ";
+            }
+            cout<<endl;
+        }
+    }
     exp.push_back(expression.getName());
 }
 void Parser::createDef(vector<string> segs){
@@ -100,6 +131,37 @@ void Parser::createDef(vector<string> segs){
     cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
+    int startState = expression.getStartState();
+    set<int> acceptedStates = expression.getAcceptStates();
+    set<char> symbols = expression.getSymbols();
+    set<int> states = expression.getStates();
+    vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
+    string tokenName = expression.getName();
+    unordered_map<int, string> acceptedOfAllNFA = expression.getAcceptedTokens();
+    cout<<"start state: "<<startState<<endl;
+    cout<<"accepted states: ";
+    for(int i : acceptedStates)
+        cout<< i << " ";
+    cout<<endl;
+    cout<< "symbols: ";
+    for(char c : symbols)
+        cout<< c << " ";
+    cout<<endl;
+    cout<<"states: ";
+    for(int i : states)
+        cout<< i << " ";
+    cout<<endl;
+    cout<<"transition Table: "<<endl;
+    for(int i = 0; i < transitionTable.size(); i++){
+        map<char, set<int>> m = transitionTable.at(i);
+        for(map<char, set<int>>::iterator it = m.begin(); it!=m.end(); it++){
+            cout<<"state: "<< i <<" takes input: "<<it->first<< " and go to state: ";
+            for(int j : it->second){
+                cout<<j<< " ";
+            }
+            cout<<endl;
+        }
+    }
     //expression.setName(className);
     defs[className] = expression;
 }
@@ -113,6 +175,37 @@ void Parser::createKeywords(vector<string> segs){
         //save it
         s.erase(remove(s.begin(), s.end(), '\\'), s.end());
         kwNFA.setName(s);
+        int startState = kwNFA.getStartState();
+        set<int> acceptedStates = kwNFA.getAcceptStates();
+    set<char> symbols = kwNFA.getSymbols();
+    set<int> states = kwNFA.getStates();
+    vector<map<char,set<int>>> transitionTable = kwNFA.getTransitionTable();
+    string tokenName = kwNFA.getName();
+    unordered_map<int, string> acceptedOfAllNFA = kwNFA.getAcceptedTokens();
+    cout<<"start state: "<<startState<<endl;
+    cout<<"accepted states: ";
+    for(int i : acceptedStates)
+        cout<< i << " ";
+    cout<<endl;
+    cout<< "symbols: ";
+    for(char c : symbols)
+        cout<< c << " ";
+    cout<<endl;
+    cout<<"states: ";
+    for(int i : states)
+        cout<< i << " ";
+    cout<<endl;
+    cout<<"transition Table: "<<endl;
+    for(int i = 0; i < transitionTable.size(); i++){
+        map<char, set<int>> m = transitionTable.at(i);
+        for(map<char, set<int>>::iterator it = m.begin(); it!=m.end(); it++){
+            cout<<"state: "<< i <<" takes input: "<<it->first<< " and go to state: ";
+            for(int j : it->second){
+                cout<<j<< " ";
+            }
+            cout<<endl;
+        }
+    }
         exp.push_back(kwNFA);
     }
 }

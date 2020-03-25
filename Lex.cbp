@@ -28,6 +28,7 @@
 		<Unit filename="include/NDConverter.h" />
 		<Unit filename="include/NFA.h" />
 		<Unit filename="include/Parser.h" />
+		<Unit filename="include/RDB.h" />
 		<Unit filename="include/SymbolTable.h" />
 		<Unit filename="include/SymbolTableEntry.h" />
 		<Unit filename="main.cpp" />

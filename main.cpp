@@ -22,6 +22,7 @@ int main()
 	DFA* dfaConverted = converter.getDFA();
 	DFAMinimzer minimizer(dfaConverted);
 	DFA* dfaMinimized = minimizer.getMinimizedDFA();
+	minimizer.minimize();
 	dfaMinimized->printTransitionTable();
 	DFADriver driver(dfaMinimized);
 	driver.setInputFile(programPath);
