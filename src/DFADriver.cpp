@@ -1,6 +1,6 @@
 #include "../include/DFADriver.h"
 #include <fstream>
-#include "ErrorMessages.h"
+#include "../include/ErrorMessages.h"
 DFADriver::DFADriver(DFA* dfa)
 {
     this->dfa = dfa;

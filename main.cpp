@@ -1,26 +1,30 @@
 #include <iostream>
-#include "include/NFA.h"
+#include "include/Parser.h"
+#include "include/NDConverter.h"
+#include "include/DFAMinimzer.h"
+#include "include/DFADriver.h"
 #include <set>
 #include <vector>
 #include <map>
+#include <string>
 
 using namespace std;
 
 int main()
 {
-
-	NFA nfa;
-	nfa.dashOperator('a','c');
-	cout<<nfa.getStates().size()<<endl;
-    /*Parser p("hhh");
-    vector<string> tokens = p.segmentation("num: digit+ | digit+ . digits ( \L | E digits) ");
-    for(int i = 0; i < tokens.size(); i++){
-        cout << tokens[i] << endl;
-    }
-    cout << "Hello world!" << endl;
-    set<char> s;
-    s.insert('\0');
-    s.insert('1');
-    cout << *s.begin() << endl;*/
+	string rulesPath = "rules.txt";
+	string programPath = "program.txt";
+	Parser p(rulesPath);
+	p.parse();
+	NFA* nfaCombined = p.getCombinedNFA();
+	NDConverter converter(nfaCombined);
+	converter.convert();
+	DFA* dfaConverted = converter.getDFA();
+	DFAMinimzer minimizer(dfaConverted);
+	DFA* dfaMinimized = minimizer.getMinimizedDFA();
+	DFADriver driver(dfaMinimized);
+	driver.setInputFile(programPath);
+	driver.start();
+	driver.produceOutputFile();
     return 0;
 }
