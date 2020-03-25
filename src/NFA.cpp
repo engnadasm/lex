@@ -305,12 +305,18 @@ void NFA::setName(string name) {
 set<int> NFA::epsloneClosure(int s) {
 	map<char, set<int>> state = this->transitionTable.at(s);
 	map<char, set<int>>::iterator it = state.find('\0');
+	set<int> resultedStates;
 	if (it == state.end()) {
-		set<int> s;
-		return s;
+		return resultedStates;
 	} else {
-		set<int> resultedStates = it->second;
-		resultedStates.insert(s);
+	    resultedStates.insert(s);
+	    for(int i : it->second){
+            resultedStates.insert(i);
+            set<int> temp = epsloneClosure(i);
+            for(int j : temp){
+                resultedStates.insert(j);
+            }
+	    }
 		return resultedStates;
 	}
 }
