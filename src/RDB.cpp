@@ -41,6 +41,8 @@ NFA RDP::unary(){
         cout << "ended plus operator" << endl;
     } else if(match("*")){
         nfa.starOperator(p);
+    }else {
+        return p;
     }
     return nfa;
 }

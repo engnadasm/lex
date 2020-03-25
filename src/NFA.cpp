@@ -1,5 +1,5 @@
 #include "../include/NFA.h"
-
+#include <iostream>
 NFA::NFA() {
 	this->startState = 0;
 }
