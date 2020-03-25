@@ -21,7 +21,7 @@ NFA RDP::toNFA(){
 
 NFA RDP::concat(){
     NFA nfa = unary();
-    while(!isOperator() && index != tokens.end()){
+    while(index != tokens.end() && (*index) != "|" && (*index) != ")"){
         NFA temp;
         NFA right = unary();
         cout << "concatenating with a new unary" <<endl;
@@ -59,7 +59,7 @@ NFA RDP::primary(){
         cout << "a ( is found" << endl;
         nfa = toNFA();
         if(!match(")")){
-            //error
+            cout << "error parentheses" <<endl;
         }
         return nfa;
     } else {
@@ -139,6 +139,10 @@ bool RDP::isOperator(){
     } else if((*index) == "+"){
         return true;
     } else if((*index) == "*"){
+        return true;
+    } else if((*index) == "("){
+        return true;
+    } else if((*index) == ")"){
         return true;
     }
     return false;
