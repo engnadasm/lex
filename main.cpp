@@ -23,7 +23,7 @@ int main()
     set<int> states = nfaCombined->getStates();
     vector<map<char,set<int>>> transitionTable = nfaCombined->getTransitionTable();
     string tokenName = nfaCombined->getName();
-    unordered_map<int, string> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
+    //unordered_map<int, string> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
     cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
@@ -48,17 +48,19 @@ int main()
             cout<<endl;
         }
     }
-    for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
+   /* for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
             cout<<"final state: "<< it->first <<" token Name: " << it->second << endl;
-    }
+    }*/
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();
-	DFAMinimzer minimizer(dfaConverted);
-	DFA* dfaMinimized = minimizer.getMinimizedDFA();
-	minimizer.minimize();
-	dfaMinimized->printTransitionTable();
-	DFADriver driver(dfaMinimized);
+	dfaConverted->printTransitionTable();
+	//DFAMinimzer minimizer(dfaConverted);
+	//DFA* dfaMinimized = minimizer.getMinimizedDFA();
+	//minimizer.minimize();
+	//dfaMinimized->printTransitionTable();
+
+	DFADriver driver(dfaConverted);
 	driver.setInputFile(programPath);
 	driver.start();
 	driver.produceOutputFile();
