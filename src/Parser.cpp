@@ -99,7 +99,7 @@ void Parser::createExp(vector<string> segs){
     set<int> states = expression.getStates();
     vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
     string tokenName = expression.getName();
-    unordered_map<int, string> acceptedOfAllNFA = expression.getAcceptedTokens();
+    unordered_map<int, pair<int, string>> acceptedOfAllNFA = expression.getAcceptedTokens();
     cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
@@ -142,7 +142,7 @@ void Parser::createDef(vector<string> segs){
     set<int> states = expression.getStates();
     vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
     string tokenName = expression.getName();
-    unordered_map<int, string> acceptedOfAllNFA = expression.getAcceptedTokens();
+    unordered_map<int, pair<int, string>> acceptedOfAllNFA = expression.getAcceptedTokens();
     cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
@@ -177,7 +177,7 @@ void Parser::createKeywords(vector<string> segs){
         temp.push_back(s);
         RDP rdp(temp, defs);
         NFA kwNFA = rdp.toNFA();
-        expression.setOrder(order);
+        kwNFA.setOrder(order);
         order++;
         //save it
         s.erase(remove(s.begin(), s.end(), '\\'), s.end());
@@ -188,7 +188,7 @@ void Parser::createKeywords(vector<string> segs){
     set<int> states = kwNFA.getStates();
     vector<map<char,set<int>>> transitionTable = kwNFA.getTransitionTable();
     string tokenName = kwNFA.getName();
-    unordered_map<int, string> acceptedOfAllNFA = kwNFA.getAcceptedTokens();
+    unordered_map<int, pair<int, string>> acceptedOfAllNFA = kwNFA.getAcceptedTokens();
     cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)

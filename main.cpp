@@ -24,6 +24,7 @@ int main()
     vector<map<char,set<int>>> transitionTable = nfaCombined->getTransitionTable();
     string tokenName = nfaCombined->getName();
     //unordered_map<int, string> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
+    unordered_map<int, pair<int, string>> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
     cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
@@ -51,6 +52,9 @@ int main()
    /* for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
             cout<<"final state: "<< it->first <<" token Name: " << it->second << endl;
     }*/
+    for(unordered_map<int, pair<int, string>>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
+            cout<<"final state: "<< it->first <<" token Name: " << it->second.second << endl;
+    }
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();
