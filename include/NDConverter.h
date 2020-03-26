@@ -20,7 +20,7 @@ class NDConverter
         DFA* dfa;
         set<int> acceptStates;
         set<char> inputSymbols ;
-        bool checkAccept(set<int> U);
+        void checkAccept(set<int> U, int num);
 };
 
 #endif // NDCONVERTER_H

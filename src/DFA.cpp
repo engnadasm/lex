@@ -91,12 +91,18 @@ ofstream myfile ("transition table.txt");
   if (myfile.is_open())
   {
       for (auto& state: transitionTable) {
+            myfile << state.first << " : ";
             for (auto& transition: state.second)
             {
-                myfile << state.first << " : ";
                 myfile << transition.first << " -> " << transition.second << ", ";
             }
          myfile << "\n";
+      }
+      myfile << "Accept states \n";
+      for(auto& s: acceptStates){
+        myfile << s.first << " : ";
+        myfile << s.second;
+        myfile << "\n";
       }
     myfile.close();
   }
