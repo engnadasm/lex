@@ -31,6 +31,7 @@ class Parser
         vector<NFA> exp;
         unordered_map<string ,NFA> defs;
         NFA* nfa;
+        int order;
 
 };
 

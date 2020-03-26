@@ -286,7 +286,8 @@ void NFA::combine(NFA nfa[], int n) {
 			this->transitionTable.push_back(nfa[i].getTransitionTable().at(j));
 		}
 		for (int j : nfa[i].getAcceptStates()) {
-			this->acceptedOfAllNFA.insert( { j, nfa[i].getName() });
+            pair<int, string> order_name(nfa[i].getOrder(), nfa[i].getName());
+			this->acceptedOfAllNFA.insert( { j, order_name });
 			this->acceptedStates.insert(j);
 		}
 		for (char c : nfa[i].getSymbols()) {
@@ -412,7 +413,7 @@ vector<map<char, set<int>>> NFA::getTransitionTable()
 string NFA::getName() {
 	return this->tokenName;
 }
-unordered_map<int, string> NFA::getAcceptedTokens() {
+unordered_map<int, pair<int, string>> NFA::getAcceptedTokens() {
 	return this->acceptedOfAllNFA;
 }
 void NFA::setSymbols(set<char> symb) {
@@ -429,4 +430,12 @@ void NFA::setAcceptStates(set<int> finalStates) {
 }
 void NFA::setTransitionTable(vector<map<char, set<int>>> transition) {
 	this->transitionTable = transition;
+}
+
+void NFA::setOrder(int order){
+    this->order = order;
+}
+
+int NFA::getOrder(){
+    return order;
 }

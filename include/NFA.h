@@ -5,6 +5,7 @@
 #include <map>
 #include <unordered_map>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ class NFA
         void keyword(char word[], int len); // same as above for flexibility
         void combine(NFA nfa[], int n); // combines n nfa's into one nfa keeping all the accept states.
         void setName(string name);
+        void setOrder(int order);
+        int getOrder();
 
         /* operations on NFA states */
         set<int> epsloneClosure(int s);
@@ -43,7 +46,7 @@ class NFA
         set<int> getAcceptStates();
         vector<map<char,set<int>>> getTransitionTable();
         string getName();
-        unordered_map<int, string> getAcceptedTokens();
+        unordered_map<int, pair<int, string>> getAcceptedTokens();
 
         void setSymbols(set<char> symb);
 		void setStates(set<int> updateStates);
@@ -60,7 +63,8 @@ class NFA
         set<int> states;
         vector<map<char,set<int>>> transitionTable;
         string tokenName;
-        unordered_map<int, string> acceptedOfAllNFA;
+        int order;
+        unordered_map<int, pair<int, string>> acceptedOfAllNFA;
 };
 
 #endif // NFA_H

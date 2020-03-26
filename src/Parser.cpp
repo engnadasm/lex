@@ -3,6 +3,7 @@
 Parser::Parser(string path)
 {
     this->path = path;
+    order = 0;
 }
 void Parser::parse(){
     string line;
@@ -90,6 +91,8 @@ void Parser::createExp(vector<string> segs){
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setName(className);
+    expression.setOrder(order);
+    order++;
      int startState = expression.getStartState();
     set<int> acceptedStates = expression.getAcceptStates();
     set<char> symbols = expression.getSymbols();
@@ -131,6 +134,8 @@ void Parser::createDef(vector<string> segs){
     cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
+    expression.setOrder(order);
+    order++;
     int startState = expression.getStartState();
     set<int> acceptedStates = expression.getAcceptStates();
     set<char> symbols = expression.getSymbols();
@@ -172,6 +177,8 @@ void Parser::createKeywords(vector<string> segs){
         temp.push_back(s);
         RDP rdp(temp, defs);
         NFA kwNFA = rdp.toNFA();
+        expression.setOrder(order);
+        order++;
         //save it
         s.erase(remove(s.begin(), s.end(), '\\'), s.end());
         kwNFA.setName(s);
