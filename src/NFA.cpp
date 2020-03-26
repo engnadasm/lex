@@ -308,6 +308,7 @@ set<int> NFA::epsloneClosure(int s) {
 	map<char, set<int>>::iterator it = state.find('\0');
 	set<int> resultedStates;
 	if (it == state.end()) {
+        resultedStates.insert(s);
 		return resultedStates;
 	} else {
 	    resultedStates.insert(s);
@@ -325,11 +326,9 @@ set<int> NFA::epsloneClosure(set<int> T) {
 	set<int> resultedStates;
 	for (int i : T) {
 		set<int> temp = this->epsloneClosure(i);
-		if (!temp.empty()) {
-			for (int j : temp) {
-				resultedStates.insert(j);
-			}
-		}
+        for (int j : temp) {
+            resultedStates.insert(j);
+        }
 	}
 	return resultedStates;
 }

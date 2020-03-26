@@ -28,9 +28,9 @@ void printSymbols(set<int> inputSymbols){
         }
 }
 void NDConverter::convert()
-{   printTokens(nfa->getAcceptedTokens());
+{   //printTokens(nfa->getAcceptedTokens());
     acceptStates = nfa->getAcceptStates();
-    printSymbols(acceptStates);
+    //printSymbols(acceptStates);
     inputSymbols = nfa->getSymbols();
     //printSymbols(inputSymbols);-----------------------------------------
     int TNum = 0;
@@ -54,24 +54,24 @@ void NDConverter::convert()
             // find its number in the dfa states
             vector< set<int> >::iterator itr = find(Dstates.begin(), Dstates.end(), T);
             TNum = distance(Dstates.begin(), itr);
-           cout<< "unmark:";
+           /*cout<< "unmark:";
             for(int c : T)
                 cout<< c << " ";
             cout<< "->" << TNum;
-            cout<<endl;
+            cout<<endl;*/
             it = inputSymbols.begin();
 
         // Iterate over the input symbols
         while (it != inputSymbols.end())
         {
             if(*it != '\0'){
-            cout<< *it <<" inputMove:";
+            /*cout<< *it <<" inputMove:";
             for(int c : nfa->inputMove(T,*it))
                 cout<< c << " ";
-            cout<<endl;
+            cout<<endl;*/
             set<int> U = nfa->epsloneClosure(nfa->inputMove(T,*it));
-            cout<<"closure:-------------------------------------------"<<endl;
-            printSymbols(U);
+            /*cout<<"closure:-------------------------------------------"<<endl;
+            printSymbols(U);*/
             if(!U.empty()){
             vector< set<int> >::iterator i = Dstates.begin();
             while (i != Dstates.end())
@@ -92,11 +92,11 @@ void NDConverter::convert()
                 int UNum = Dstates.size()- 1;
                 dfa->addTransition(TNum, UNum, *it);
                 checkAccept(U, UNum);
-                    cout<< "add:";
+                   /* cout<< "add:";
                     for(int c : U)
                         cout<< c << " ";
                     cout<< "->" << UNum;
-                    cout<<endl;
+                    cout<<endl;*/
             }
             }
             }
@@ -120,7 +120,7 @@ void NDConverter::checkAccept(set<int> U, int num){
                 if(nfa->getAcceptedTokens()[*itr2].first > order){
                     order = nfa->getAcceptedTokens()[*itr2].first;
                     token = nfa->getAcceptedTokens()[*itr2].second;
-                cout << "order:" << order << " ,token:"<<token<<endl;
+                //cout << "order:" << order << " ,token:"<<token<<endl;
                 }
             }
             itr1++;

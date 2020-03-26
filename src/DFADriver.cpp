@@ -29,9 +29,9 @@ void DFADriver::start(){
         }
         string token = dfa->getToken();
         string lexeme = dfa->getLexeme();
-        /*cout<<"input sequence: "<<dfa->getInputSequence()<<endl;
+        cout<<"input sequence: "<<dfa->getInputSequence()<<endl;
         cout<<"token: "<<token<<endl;
-        cout<<"lexeme: "<<lexeme<<endl;*/
+        cout<<"lexeme: "<<lexeme<<endl;
         //no match exists
         if(token == ""){
              if(dfa->getInputSequence()== " " || dfa->getInputSequence()== "\n"){// No Error
