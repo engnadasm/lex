@@ -107,14 +107,23 @@ DFA* NDConverter::getDFA()
     return dfa;
 }
 void NDConverter::checkAccept(set<int> U, int num){
+    int order = -1;
+    string token;
     set<int>::iterator  itr1 = acceptStates.begin();
         while (itr1 != acceptStates.end())
         {
             set<int>::iterator itr2 = U.find(*itr1);
             if (itr2 != U.end()){
-                dfa->accept(num,nfa->getAcceptedTokens()[*itr2]);
+                if(nfa->getAcceptedTokens()[*itr2].first > order){
+                    order = nfa->getAcceptedTokens()[*itr2].first;
+                    token = nfa->getAcceptedTokens()[*itr2].second;
+                cout << "order:" << order << " ,token:"<<token<<endl;
+                }
             }
             itr1++;
+        }
+        if(order != -1){
+            dfa->accept(num,token);
         }
 }
 

@@ -21,14 +21,17 @@ void DFADriver::setInputFile(string path){
 void DFADriver::start(){
     unsigned int i = 0;
     unsigned int j = 0;
-    unsigned int index = 0;
     while( j < inputBuf.size()){
-        while(!dfa->isDead()&& j+i < inputBuf.size()){
+        while((!dfa->isDead())&& (j+i < inputBuf.size())){
+            //cout<< dfa->getCurrentState();
             dfa->move(inputBuf[j+i]);
             i++;
         }
         string token = dfa->getToken();
         string lexeme = dfa->getLexeme();
+        cout<<"input sequence: "<<dfa->getInputSequence()<<endl;
+        cout<<"token: "<<token<<endl;
+        cout<<"lexeme: "<<lexeme<<endl;
         //no match exists
         if(token == ""){
              if(dfa->getInputSequence()== " " || dfa->getInputSequence()== "\n"){// No Error
@@ -41,17 +44,19 @@ void DFADriver::start(){
 
         }//match exist
         else{
-            tokens[index] = token;
-            index++;
+                //cout<<"match"<<endl;
+            tokens.push_back(token);
          //insert identifiers into symbol table
             if(token == "id"){
                 symbolTable->insert(lexeme, token);
+                cout<<"symtab"<<endl;
             }
-            j = j + token.size();
+            j = j + lexeme.size();
         }
 
         i = 0;
         dfa->reset();
+       // cout<< "j:"<<j<<endl;
     }
 }
 vector<string> DFADriver::getTokens(){

@@ -70,6 +70,7 @@ bool DFA::isDead(){
 int DFA::move(char input){
     if(inputs.find(input) == inputs.end()){
             inputSequence += input;
+            currentState = -1;
             return -1;
     }
     currentState = transitionTable[currentState][input];
