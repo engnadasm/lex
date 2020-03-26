@@ -9,27 +9,28 @@ NDConverter::NDConverter(NFA* nfa)
     this->nfa = nfa;
 
 }
-void printTokens( unordered_map<int, string> tokens){
-    cout<<"tokens--------------";
+void printTokens( unordered_map<int, pair<int, string>>tokens){
+    cout<<"tokens--------------"<<endl;
    for(auto& s: tokens){
         cout << s.first << " : ";
-        cout << s.second;
-        cout << "\n";
+        cout << "order " <<s.second.first;
+        cout << "token "<<s.second.second;
+        cout << endl;
       }
 }
-void printSymbols(set<char> inputSymbols){
-    cout<< "symbols"<<endl;
-    set<char> :: iterator it = inputSymbols.begin();
+void printSymbols(set<int> inputSymbols){
+    cout<< "accept----------------"<<endl;
+    set<int> :: iterator it = inputSymbols.begin();
     while (it != inputSymbols.end())
         {
-            cout<< *it<<endl;
+            cout<< *it<<" ";
             it++;
         }
 }
 void NDConverter::convert()
-{   //printTokens(nfa->getAcceptedTokens());
+{   printTokens(nfa->getAcceptedTokens());
     acceptStates = nfa->getAcceptStates();
-
+    printSymbols(acceptStates);
     inputSymbols = nfa->getSymbols();
     //printSymbols(inputSymbols);-----------------------------------------
     int TNum = 0;
@@ -53,22 +54,24 @@ void NDConverter::convert()
             // find its number in the dfa states
             vector< set<int> >::iterator itr = find(Dstates.begin(), Dstates.end(), T);
             TNum = distance(Dstates.begin(), itr);
-           /* cout<< "unmark:";
+           cout<< "unmark:";
             for(int c : T)
                 cout<< c << " ";
             cout<< "->" << TNum;
-            cout<<endl;*/
+            cout<<endl;
             it = inputSymbols.begin();
 
         // Iterate over the input symbols
         while (it != inputSymbols.end())
         {
             if(*it != '\0'){
-            /*cout<< "inputMove:";
+            cout<< *it <<" inputMove:";
             for(int c : nfa->inputMove(T,*it))
                 cout<< c << " ";
-            cout<<endl;*/
+            cout<<endl;
             set<int> U = nfa->epsloneClosure(nfa->inputMove(T,*it));
+            cout<<"closure:-------------------------------------------"<<endl;
+            printSymbols(U);
             if(!U.empty()){
             vector< set<int> >::iterator i = Dstates.begin();
             while (i != Dstates.end())
@@ -76,7 +79,7 @@ void NDConverter::convert()
                 if(U == *i){
                 //found -> add transition from T to U under char *it
                 int UNum = distance(Dstates.begin(), i);
-               /* cout<<"found: "<< UNum<<"  "<<*it<<endl;*/
+               // cout<<"found: "<< UNum<<"  "<<*it<<endl;
                 dfa->addTransition(TNum, UNum, *it);
                 break;
                 }
@@ -89,11 +92,11 @@ void NDConverter::convert()
                 int UNum = Dstates.size()- 1;
                 dfa->addTransition(TNum, UNum, *it);
                 checkAccept(U, UNum);
-                 /*   cout<< "add:";
+                    cout<< "add:";
                     for(int c : U)
                         cout<< c << " ";
                     cout<< "->" << UNum;
-                    cout<<endl;*/
+                    cout<<endl;
             }
             }
             }
