@@ -55,6 +55,13 @@ int main()
     for(unordered_map<int, pair<int, string>>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
             cout<<"final state: "<< it->first <<" token Name: " << it->second.second << endl;
     }
+    cout<<"Start epsilon closure"<<endl;
+    set<int> epsi = nfaCombined->epsloneClosure({3,19});
+    for(int j : epsi){
+        cout<<j<< " ";
+    }
+    cout<<endl;
+    cout<<"finished epsilon closure"<<endl;
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();
