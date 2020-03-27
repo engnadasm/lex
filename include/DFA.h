@@ -15,7 +15,9 @@ class DFA
         void setNumStates(int num);
         void addTransition(int s1, int s2, char input); //transition from s1 to s2 under input character
         void accept(int state, string className); //set state state accept state
+        void newaccept(int state, string className); //set state state accept state
 
+        void replaceTransition(int o1, int o2, int s1, int s2, char input);
         unordered_map<int, string> getAcceptStates();
         set<char> getInputSymbols();
         int getInitState();
@@ -36,6 +38,7 @@ class DFA
     private:
         set<char> inputs;
         unordered_map<int, string> acceptStates;
+        unordered_map<int, string> nacceptStates;
         int initState;
         int currentState;
         string lastValidToken;
@@ -43,7 +46,10 @@ class DFA
         string inputSequence;
         //(Key:state, value: (key: input, value:next state))
         unordered_map<int , unordered_map<char, int>> transitionTable;
+        unordered_map<int , unordered_map<char, int>> ntransitionTable;
         void initTransitionTableEntry(int state);
+        bool checkPass[];
+
 };
 
 #endif // DFA_H

@@ -18,17 +18,18 @@ class DFAMinimzer
     protected:
 
     private:
-        unordered_map<int, unordered_map<int, string>> doPartition();//Construct New Partition
+        vector<unordered_map<int, string>> doPartition();//Construct New Partition
         void oneStateOfEachGroup();
         DFA* dfa;
+        DFA* newDfa;
         bool flag = true;
-        int counter = 1;
+        int counter = 2;
         map<int, int> groupStates;
         set<char> inputs ;
         int initState;
         int numStates;
         unordered_map<int, string> acceptStates;
-        unordered_map<int, unordered_map<int, string>> partitions;
+        vector <unordered_map<int, string>> partitions;
 };
 
 #endif // DFAMINIMZER_H

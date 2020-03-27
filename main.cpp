@@ -25,7 +25,7 @@ int main()
     string tokenName = nfaCombined->getName();
     //unordered_map<int, string> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
     unordered_map<int, pair<int, string>> acceptedOfAllNFA = nfaCombined->getAcceptedTokens();
-    cout<<"start state: "<<startState<<endl;
+   /* cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
         cout<< i << " ";
@@ -49,31 +49,43 @@ int main()
             cout<<endl;
         }
     }
-   /* for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
+    for(unordered_map<int, string>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
             cout<<"final state: "<< it->first <<" token Name: " << it->second << endl;
     }*/
-    for(unordered_map<int, pair<int, string>>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
+    /*for(unordered_map<int, pair<int, string>>::iterator it = acceptedOfAllNFA.begin(); it!=acceptedOfAllNFA.end(); it++){
             cout<<"final state: "<< it->first <<" token Name: " << it->second.second << endl;
     }
-    cout<<"Start epsilon closure"<<endl;
-    set<int> epsi = nfaCombined->epsloneClosure({3,19});
+    cout<<"Start epsilon closure"<<endl;*/
+    /*set<int> epsi = nfaCombined->epsloneClosure({3,19});
     for(int j : epsi){
         cout<<j<< " ";
     }
     cout<<endl;
-    cout<<"finished epsilon closure"<<endl;
+    cout<<"finished epsilon closure"<<endl;*/
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();
-	dfaConverted->printTransitionTable();
-	//DFAMinimzer minimizer(dfaConverted);
-	//DFA* dfaMinimized = minimizer.getMinimizedDFA();
-	//minimizer.minimize();
-	//dfaMinimized->printTransitionTable();
+	//dfaConverted->printTransitionTable();
+	DFAMinimzer minimizer(dfaConverted);
+	minimizer.minimize();
+	    cout<<"finished minimize"<<endl;
+    DFA* dfaMinimized = minimizer.getMinimizedDFA();
+    	    cout<<"table before: "<<endl;
 
-	DFADriver driver(dfaConverted);
+	dfaMinimized->printTransitionTable();
+	    cout<<"1"<<endl;
+
+	DFADriver driver(dfaMinimized);
+	    cout<<"2"<<endl;
+
 	driver.setInputFile(programPath);
+	    cout<<"3"<<endl;
+
 	driver.start();
+	    cout<<"4"<<endl;
+
 	driver.produceOutputFile();
+	    cout<<"5"<<endl;
+
     return 0;
 }

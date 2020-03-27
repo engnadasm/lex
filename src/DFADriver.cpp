@@ -12,7 +12,9 @@ void DFADriver::setInputFile(string path){
     ifstream file(path);
     if (file.is_open())
     {
+        cout <<"enter\n";
         while(getline(file, line)){
+            cout << line << "\n";
             inputBuf += line;
         }
         file.close();
@@ -23,7 +25,7 @@ void DFADriver::start(){
     unsigned int j = 0;
     while( j < inputBuf.size()){
         while((!dfa->isDead())&& (j+i < inputBuf.size())){
-            //cout<< dfa->getCurrentState();
+            cout<< dfa->getCurrentState();
             dfa->move(inputBuf[j+i]);
             i++;
         }

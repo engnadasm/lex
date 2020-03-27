@@ -11,7 +11,6 @@ DFAMinimzer::DFAMinimzer(DFA* dfa)
 {
     this->dfa = dfa;
     this->numStates = dfa->getNumStates();
-    cout << this->numStates << endl;
 }
 void DFAMinimzer::minimize()
 {
@@ -20,14 +19,13 @@ void DFAMinimzer::minimize()
     this->numStates = dfa->getNumStates();
     this->acceptStates = dfa->getAcceptStates();
     unordered_map<int, string> nonAcceptStates;
-    cout << this->numStates<< endl;
     for (int i =0 ; i< this->numStates; i++)
     {
         if (!this->dfa->isAccept(i))
         {
             cout <<  "nonAccept : " << i << endl;
             nonAcceptStates.insert(pair<int,string>(i, ""));
-            groupStates.insert(pair<int,int>(i, 0));
+            groupStates.insert(pair<int,int>(i,0));
         }
         else
         {
@@ -36,58 +34,81 @@ void DFAMinimzer::minimize()
             //this->counter++;
         }
     }
-
-    this->partitions[0] = nonAcceptStates;
-    //partitions[1] = acceptStates;
+    this->partitions.push_back(acceptStates);
+    this->partitions.push_back(nonAcceptStates);
 
     this->flag = true;
+    for (auto& firstState: this->acceptStates){
+        cout << "state : " << firstState.first << "acc : " << firstState.second << "\n";
+    }
 
     while(flag)
     {
         this->flag = false;
-        for(int i = 0 ; i < this->numStates; i++)
+        int partitionCount = partitions.size();
+        for(int i = 0 ; i < partitionCount; i++)
         {
             this->partitions = doPartition();
         }
     }
+    cout<<"table befor : \n";
+    for(int i = 0 ; i < numStates; i++) {
+            cout << i << " : ";
+            for (auto& chars : inputs)
+            {
+                cout << chars << " -> " << this->dfa->getNextState(i, chars) << ", \n";
+            }
+      }
     oneStateOfEachGroup();
 
 }
 
-unordered_map<int, unordered_map<int, string>> DFAMinimzer::doPartition()
+vector<unordered_map<int, string>> DFAMinimzer::doPartition()
 {
-
-    //for(int j = 0 ; j < partitions[i].size() ; j++)
     int j = 0;
     for (auto& firstState: this->partitions[0])
     {
         unordered_map<int, string> currentPartition;
-        //std::cout << p.first << ": " << p.second << std::endl;
         currentPartition.insert(pair<int,string>(firstState.first,firstState.second));
-        j++;
         //for(int k = j+1 ; k < partitions[i].size() ; k++)
         int k = 0;
-        for(unordered_map<int, string>::iterator secondState = this->partitions[0].begin(); secondState != partitions[0].end(); ++secondState){
-            if(k < j + 1 ){
+        for(unordered_map<int, string>::iterator secondState = this->partitions[0].begin();
+         secondState != partitions[0].end(); ++secondState){
+            if(k < (j + 1) ){
+                k++;
                 continue;
             } else {
+                cout << "j = " << firstState.first << "k = " << secondState->first << std::endl;
                 bool check = true;
                 for(char charInput : this->inputs)
                 {
                     //firstState is j & secondState is k
-                    int nextFirstState = groupStates[this->dfa->getNextState(firstState.first,charInput)];
-                    int nextSecondState = groupStates[this->dfa->getNextState(secondState->first,charInput)];
-                    if ((nextFirstState != nextSecondState) && (
-                        (nextSecondState != -1 ) || (nextFirstState != -1)))
+                    int nextFirstState = this->dfa->getNextState(firstState.first,charInput);
+                    int nextSecondState = this->dfa->getNextState(secondState->first,charInput);
+                    cout << "nextFirstState : " << nextFirstState << "nextSecondState : " << nextSecondState <<"input :"<<charInput << endl;
+                   // cout<< "acc1 : " << acceptStates.at(nextFirstState) << "acc2 : "<< acceptStates.at(nextSecondState);
+                    if ((nextFirstState != nextSecondState))
                     {
+                        cout << "enter divide1\n";
                         check =false;
                         break;
+                    } else if ((nextFirstState == nextSecondState)&& dfa->isAccept(firstState.first)
+                                && dfa->isAccept(secondState->first)
+                                )
+                    {
+                      cout<< "acc1 : " << acceptStates.at(firstState.first) << "acc2 : "<< acceptStates.at(secondState->first) << "\n";
+                        if(acceptStates.at(firstState.first)!= acceptStates.at(secondState->first)) {
+                                cout << "enter divide2\n";
+                        check =false;
+                        break;
+                        }
                     }
+
                 }
                 if (check)
                 {
                     currentPartition.insert(pair<int,string>(secondState->first,secondState->second));
-                    this->partitions[0].erase(secondState->first);
+                    this->partitions[0].erase( secondState->first);
                     k--;
                 }
                 else
@@ -97,17 +118,23 @@ unordered_map<int, unordered_map<int, string>> DFAMinimzer::doPartition()
                 k++;
             }
         }
+        if(partitions[0].size() != 1){
         for (auto& state: currentPartition)
         //for (int m =0; m < currentPartition.size(); m++)
         {
             groupStates[state.first] = this->counter;
+        //    cout << "state.first" << state.first << "groupStates : " << counter << endl;
         }
-        this->partitions[this->counter] = currentPartition;
+        }
+        this->partitions.push_back(currentPartition);
         //this->partitions.insert(this->counter,currentPartition);
         this->partitions[0].erase(firstState.first);
-        j--;
         this->counter++;
     }
+        if(flag){
+            this->partitions.erase(partitions.begin());
+        }
+
     return this->partitions;
 }
 
@@ -122,16 +149,28 @@ void DFAMinimzer::oneStateOfEachGroup(){
 
     int currentState = 0;//initState
     int nextState ;
+
     for(int i = 0 ; i < this->numStates; i++)
     {
         currentState = i;
-        for(char charInput : this->inputs)
+        for(auto& charInput : this->inputs)
         {
             nextState = this->dfa->getNextState(currentState, charInput); // return -1 if dead state
+            cout <<"currentState = "<<currentState << "-->"   << nextState<< "char : "<< charInput <<endl;
             if(nextState != -1){
-                this->dfa->addTransition(this->groupStates[currentState], this->groupStates[nextState], charInput);
+                this->dfa->replaceTransition(currentState,nextState,this->groupStates[currentState],
+                                              this->groupStates[nextState], charInput);
+                        cout << i << "-currentState : " << this->groupStates[currentState]
+                         << "nextState : " << groupStates[nextState] << "under : "<< charInput << "\n" << endl;
+            } else {
+                /*this->dfa->replaceTransition(currentState,nextState,this->groupStates[currentState],
+                                              -1 , charInput);*/
+                                              cout << i << "-currentState : " << this->groupStates[currentState]
+                         << "nextState : " << -1 << "under : "<< charInput << "\n" << endl;
             }
         }
+        if(dfa->isAccept(currentState)) {
+                this->dfa->newaccept(this->groupStates[currentState], acceptStates.at(currentState));
+            }
     }
-    //dfa->setNumStates(partitions.size() + acceptStates.size();
 }
