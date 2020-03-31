@@ -103,7 +103,7 @@ void NDConverter::convert()
          it++;
         }
     }
-    cout << "converter finish----------------------------------------";
+   // cout << "converter finish----------------------------------------";
 }
 DFA* NDConverter::getDFA()
 {

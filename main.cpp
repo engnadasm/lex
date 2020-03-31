@@ -65,27 +65,14 @@ int main()
 	NDConverter converter(nfaCombined);
 	converter.convert();
 	DFA* dfaConverted = converter.getDFA();
-	//dfaConverted->printTransitionTable();
 	DFAMinimzer minimizer(dfaConverted);
 	minimizer.minimize();
-	    cout<<"finished minimize"<<endl;
     DFA* dfaMinimized = minimizer.getMinimizedDFA();
-    	    cout<<"table before: "<<endl;
-
 	dfaMinimized->printTransitionTable();
-	    cout<<"1"<<endl;
-
 	DFADriver driver(dfaMinimized);
-	    cout<<"2"<<endl;
-
 	driver.setInputFile(programPath);
-	    cout<<"3"<<endl;
-
 	driver.start();
-	    cout<<"4"<<endl;
-
 	driver.produceOutputFile();
-	    cout<<"5"<<endl;
 
     return 0;
 }

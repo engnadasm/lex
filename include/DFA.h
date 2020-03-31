@@ -48,7 +48,7 @@ private:
     unordered_map<int, unordered_map<char, int>> transitionTable;
     unordered_map<int, unordered_map<char, int>> ntransitionTable;
     void initTransitionTableEntry(int state);
-    bool checkPass[];
+    bool checkPass[100] = {false};
 
 };
 

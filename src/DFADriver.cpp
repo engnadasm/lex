@@ -12,9 +12,9 @@ void DFADriver::setInputFile(string path){
     ifstream file(path);
     if (file.is_open())
     {
-        cout <<"enter\n";
+       // cout <<"enter\n";
         while(getline(file, line)){
-            cout << line << "\n";
+          //  cout << line << "\n";
             inputBuf += line;
         }
         file.close();
@@ -25,15 +25,15 @@ void DFADriver::start(){
     unsigned int j = 0;
     while( j < inputBuf.size()){
         while((!dfa->isDead())&& (j+i < inputBuf.size())){
-            cout<< dfa->getCurrentState();
+           // cout<< dfa->getCurrentState();
             dfa->move(inputBuf[j+i]);
             i++;
         }
         string token = dfa->getToken();
         string lexeme = dfa->getLexeme();
-        cout<<"input sequence: "<<dfa->getInputSequence()<<endl;
+       /* cout<<"input sequence: "<<dfa->getInputSequence()<<endl;
         cout<<"token: "<<token<<endl;
-        cout<<"lexeme: "<<lexeme<<endl;
+        cout<<"lexeme: "<<lexeme<<endl;*/
         //no match exists
         if(token == ""){
              if(dfa->getInputSequence()== " " || dfa->getInputSequence()== "\n"){// No Error
@@ -51,7 +51,7 @@ void DFADriver::start(){
          //insert identifiers into symbol table
             if(token == "id"){
                 symbolTable->insert(lexeme, token);
-                cout<<"symtab"<<endl;
+               // cout<<"symtab"<<endl;
             }
             j = j + lexeme.size();
         }

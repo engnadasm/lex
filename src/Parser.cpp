@@ -10,9 +10,9 @@ void Parser::parse(){
     ifstream file(path);
     while(getline(file, line)){
         vector<string> segs = segmentation(line);
-        cout << "parsing line:  " << line << endl;
+        //cout << "parsing line:  " << line << endl;
         parseSegs(segs);
-        cout << "finished-------------------------------" << endl;
+        //cout << "finished-------------------------------" << endl;
     }
     file.close();
     NFA arr[exp.size()];
@@ -73,10 +73,10 @@ void Parser::parseSegs(vector<string> segs){
         segs.erase(segs.end()-1);
         createKeywords(segs);
     } else if (segs[1] == ":"){
-        cout << "parsing an expression" << endl;
+      //  cout << "parsing an expression" << endl;
         createExp(segs);
     } else if (segs[1] == "="){
-        cout << "parsing a definition" << endl;
+       // cout << "parsing a definition" << endl;
         createDef(segs);
     } else {
         //error
@@ -84,10 +84,10 @@ void Parser::parseSegs(vector<string> segs){
 }
 void Parser::createExp(vector<string> segs){
     string className = segs[0];
-    cout << "expression name = " << className << endl;
+  //  cout << "expression name = " << className << endl;
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
-    cout << "# tokens = " << exp.size() << endl;
+   // cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setName(className);
@@ -100,7 +100,7 @@ void Parser::createExp(vector<string> segs){
     vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
     string tokenName = expression.getName();
     unordered_map<int, pair<int, string>> acceptedOfAllNFA = expression.getAcceptedTokens();
-    cout<<"start state: "<<startState<<endl;
+   /* cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
         cout<< i << " ";
@@ -123,15 +123,15 @@ void Parser::createExp(vector<string> segs){
             }
             cout<<endl;
         }
-    }
+    }*/
     this->exp.push_back(expression);
 }
 void Parser::createDef(vector<string> segs){
     string className = segs[0];
-    cout << "definition name = " << className << endl;
+    //cout << "definition name = " << className << endl;
     vector<string> exp;
     copy(segs.begin()+2, segs.end(), back_inserter(exp));
-    cout << "# tokens = " << exp.size() << endl;
+   // cout << "# tokens = " << exp.size() << endl;
     RDP rdp(exp, defs);
     NFA expression = rdp.toNFA();
     expression.setOrder(order);
@@ -143,7 +143,7 @@ void Parser::createDef(vector<string> segs){
     vector<map<char,set<int>>> transitionTable = expression.getTransitionTable();
     string tokenName = expression.getName();
     unordered_map<int, pair<int, string>> acceptedOfAllNFA = expression.getAcceptedTokens();
-    cout<<"start state: "<<startState<<endl;
+  /*  cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
         cout<< i << " ";
@@ -166,7 +166,7 @@ void Parser::createDef(vector<string> segs){
             }
             cout<<endl;
         }
-    }
+    }*/
     //expression.setName(className);
     defs[className] = expression;
 }
@@ -189,7 +189,7 @@ void Parser::createKeywords(vector<string> segs){
     vector<map<char,set<int>>> transitionTable = kwNFA.getTransitionTable();
     string tokenName = kwNFA.getName();
     unordered_map<int, pair<int, string>> acceptedOfAllNFA = kwNFA.getAcceptedTokens();
-    cout<<"start state: "<<startState<<endl;
+    /*cout<<"start state: "<<startState<<endl;
     cout<<"accepted states: ";
     for(int i : acceptedStates)
         cout<< i << " ";
@@ -212,7 +212,7 @@ void Parser::createKeywords(vector<string> segs){
             }
             cout<<endl;
         }
-    }
+    }*/
         exp.push_back(kwNFA);
     }
 }

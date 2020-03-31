@@ -187,7 +187,7 @@ void DFA::printTransitionTable()
             for (auto& ntransition: state.second)
             {
                 //cout << ntransition.first << " -> " << ntransition.second << ", \n";
-                myfile << ntransition.first << " -> " << ntransition.second << ", \n";
+                myfile << ntransition.first << " -> " << ntransition.second << ",";
             }
             myfile << "\n";
         }

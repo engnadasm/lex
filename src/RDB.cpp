@@ -24,9 +24,9 @@ NFA RDP::concat(){
     while(index != tokens.end() && (*index) != "|" && (*index) != ")"){
         NFA temp;
         NFA right = unary();
-        cout << "concatenating with a new unary" <<endl;
+       // cout << "concatenating with a new unary" <<endl;
         temp.concatenateOperator(nfa, right);
-        cout << "concatenation success" <<endl;
+       // cout << "concatenation success" <<endl;
         nfa = temp;
     }
     return nfa;
@@ -36,9 +36,9 @@ NFA RDP::unary(){
     NFA p = primary();
     NFA nfa;
     if(match("+")){
-        cout << "plus operator" << endl;
+      //  cout << "plus operator" << endl;
         nfa.plusOperator(p);
-        cout << "ended plus operator" << endl;
+      //  cout << "ended plus operator" << endl;
     } else if(match("*")){
         nfa.starOperator(p);
     }else {
