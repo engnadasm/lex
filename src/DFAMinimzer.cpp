@@ -71,8 +71,8 @@ vector<unordered_map<int, string>> DFAMinimzer::doPartition()
                 bool check = true;
                 for(char charInput : this->inputs)
                 {
-                    int nextFirstState = groupStates[this->dfa->getNextState(firstState.first,charInput)];
-                    int nextSecondState = groupStates[this->dfa->getNextState(secondState->first,charInput)];
+                    int nextFirstState = this->dfa->getNextState(firstState.first,charInput);
+                    int nextSecondState = this->dfa->getNextState(secondState->first,charInput);
                     if ((nextFirstState != nextSecondState))
                     {
                         check =false;
